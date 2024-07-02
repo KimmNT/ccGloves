@@ -7,6 +7,7 @@ export default function DetailPage({ navigation, route }) {
   return (
     <View>
       <Text>{name}</Text>
+      <Text>OKELA</Text>
     </View>
   );
 }

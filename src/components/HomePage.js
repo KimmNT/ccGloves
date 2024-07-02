@@ -21,7 +21,7 @@ export default function HomePage({ navigation }) {
       <TouchableOpacity
         onPress={() => navigation.navigate("Detail", { name: input })}
       >
-        <Text>Passing data</Text>
+        <Text>Passing dataaaaaaa</Text>
       </TouchableOpacity>
     </View>
   );
