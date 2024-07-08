@@ -72,6 +72,12 @@ export default function HomePage({ navigation }) {
           </View>
         </View>
       </View>
+      <View style={shareStyle.tab__container}>
+        <Icon name="home" style={shareStyle.tab__icon}></Icon>
+        <TouchableOpacity onPress={() => navigation.navigate("Detail")}>
+          <Icon name="bookmark" style={shareStyle.tab__icon}></Icon>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

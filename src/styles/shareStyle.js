@@ -37,14 +37,16 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "flex-start",
-    justifyContent: "space-between",
+    justifyContent: "center",
     paddingHorizontal: res * 0.02,
     paddingVertical: res * 0.03,
+    gap: res * 0.15,
   },
   navbar__title: {
     fontSize: res * 0.025,
     fontWeight: "600",
     color: light,
+    justifyContent: "center",
   },
   navbar__icon: {},
   navbar__icon_container: {
@@ -69,6 +71,24 @@ const styles = StyleSheet.create({
     marginTop: res * 0.1,
     overflow: "hidden",
     padding: res * 0.03,
+    position: "relative",
+  },
+  tab__container: {
+    backgroundColor: btnColor,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    // height: res,
+    position: "absolute",
+    alignItems: "center",
+    bottom: 0,
+    padding: res * 0.025,
+    borderTopLeftRadius: res * 0.05,
+    borderTopRightRadius: res * 0.05,
+  },
+  tab__icon: {
+    fontSize: res * 0.05,
+    color: primary,
   },
 });
 
