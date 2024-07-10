@@ -2,6 +2,7 @@ import {
   Alert,
   Image,
   KeyboardAvoidingView,
+  Modal,
   Platform,
   ScrollView,
   StyleSheet,
@@ -17,12 +18,16 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import Clock from "../images/clock.png";
 import { Calendar } from "react-native-calendars";
 import moment from "moment";
+import DurationModals from "./Models/DurationModals";
+import StartTimeModal from "./Models/StartTimeModal";
 
 export default function HourPage({ navigation }) {
   const [selectedDate, setSelectedDate] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [starTimeModalVisible, setStartTimeModalVisible] = useState(false);
   const [markedDates, setMarkedDates] = useState({});
-  const [duration, setDuration] = useState(0);
-  const [startTime, setStartTime] = useState(0);
+  const [duration, setDuration] = useState(3);
+  const [startTime, setStartTime] = useState(7);
 
   const onDayPress = (day) => {
     const formattedDate = moment(day.dateString).format("DD/MM/YYYY");
@@ -44,6 +49,13 @@ export default function HourPage({ navigation }) {
         },
       },
     });
+  };
+
+  const handleSelectDuration = (number) => {
+    setDuration(number);
+  };
+  const handleSelectStartTime = (number) => {
+    setStartTime(number);
   };
 
   return (
@@ -87,23 +99,40 @@ export default function HourPage({ navigation }) {
                   Choose working hours
                 </Text>
                 <View style={hourStyle.time__picking}>
-                  <View style={hourStyle.picking__item}>
+                  <TouchableOpacity
+                    onPress={() => setModalVisible(true)}
+                    style={hourStyle.picking__item}
+                  >
                     <Text style={hourStyle.picking__title}>Duration</Text>
                     <View style={hourStyle.picking__line}></View>
                     <Text style={hourStyle.picking__input}>{duration} hrs</Text>
-                  </View>
-                  <View style={hourStyle.picking__item}>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setStartTimeModalVisible(true)}
+                    style={hourStyle.picking__item}
+                  >
                     <Text style={hourStyle.picking__title}>Start time</Text>
                     <View style={hourStyle.picking__line}></View>
                     <Text style={hourStyle.picking__input}>{startTime}H</Text>
-                  </View>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
           </View>
         </View>
       </ScrollView>
-      <View></View>
+      <DurationModals
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        selectedDuration={handleSelectDuration}
+        startTimeValue={startTime}
+      />
+      <StartTimeModal
+        modalVisible={starTimeModalVisible}
+        setModalVisible={setStartTimeModalVisible}
+        selectedStartTime={handleSelectStartTime}
+        durationValue={duration}
+      />
     </KeyboardAvoidingView>
   );
 }

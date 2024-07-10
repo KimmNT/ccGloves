@@ -28,22 +28,25 @@ const styles = StyleSheet.create({
     fontSize: res * 0.02,
   },
   hour__calendar: {
-    marginTop: res * 0.01,
+    marginTop: res * 0.03,
   },
-  hour__time: {},
+  hour__time: {
+    marginTop: res * 0.03,
+    gap: res * 0.02,
+  },
   time__headline: {
     fontSize: res * 0.02,
     fontWeight: "600",
   },
   time__picking: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    gap: res * 0.05,
+    justifyContent: "space-around",
+    gap: res * 0.1,
   },
   picking__item: {
     alignItems: "center",
     backgroundColor: primary,
-    flexGrow: 1,
+    flexGrow: 0.5,
     paddingVertical: res * 0.02,
     borderRadius: res * 0.02,
     gap: res * 0.01,
@@ -54,13 +57,14 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   picking__line: {
-    width: "70%",
-    height: res * 0.003,
-    backgroundColor: light,
+    width: "60%",
+    height: res * 0.002,
+    backgroundColor: bgColor,
   },
   picking__input: {
     color: light,
     fontSize: res * 0.03,
+    fontWeight: "600",
   },
 });
 
