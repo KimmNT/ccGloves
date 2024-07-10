@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import durationStyle from "../../styles/durationModal";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function DurationModals({
   modalVisible,
@@ -52,6 +53,7 @@ export default function DurationModals({
                 key={index}
                 onPress={() => {
                   selectedDuration(number.time);
+
                   setModalVisible(false);
                 }}
               >
@@ -64,7 +66,7 @@ export default function DurationModals({
           style={durationStyle.btn__item}
           onPress={() => setModalVisible(false)}
         >
-          <Text style={durationStyle.btn__item_text}>Close</Text>
+          <Icon style={durationStyle.btn__item_icon} name="close" />
         </TouchableOpacity>
       </View>
     </Modal>

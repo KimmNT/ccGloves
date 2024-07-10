@@ -90,6 +90,39 @@ const styles = StyleSheet.create({
     fontSize: res * 0.05,
     color: primary,
   },
+
+  btn__value: {
+    width: "100%",
+    position: "absolute",
+    bottom: res * 0.02,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  btn__value_content: {
+    backgroundColor: softYellow,
+    width: "90%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: res * 0.02,
+    paddingHorizontal: res * 0.03,
+    borderRadius: res * 0.04,
+  },
+  value__text: {
+    fontSize: res * 0.03,
+    fontWeight: "600",
+  },
+  value__icon_container: {
+    width: res * 0.05,
+    height: res * 0.05,
+    borderRadius: (res * 0.05) / 2,
+    backgroundColor: light,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  value__icon: {
+    fontSize: res * 0.03,
+  },
 });
 
 export default styles;

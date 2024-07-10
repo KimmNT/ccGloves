@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 import durationStyle from "../../styles/durationModal";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function StartTimeModal({
   modalVisible,
@@ -15,25 +16,27 @@ export default function StartTimeModal({
   durationValue,
   selectedStartTime,
 }) {
-  const numbers = [
-    { time: 7 },
-    { time: 8 },
-    { time: 9 },
-    { time: 10 },
-    { time: 11 },
-    { time: 12 },
-    { time: 13 },
-    { time: 14 },
-    { time: 15 },
-    { time: 16 },
-    { time: 17 },
-    { time: 18 },
-    { time: 19 },
-  ];
+  const getCurrentHour = () => {
+    const date = new Date();
+    return date.getHours();
+  };
+
+  const generateTimesArray = () => {
+    const currentHour = getCurrentHour();
+    const times = [];
+    for (let i = currentHour + 1; i <= 22; i++) {
+      times.push({ time: i });
+    }
+    return times;
+  };
+
+  const numbers = generateTimesArray();
+
   const maxTime = 22 - durationValue;
   const sortedNumbers = numbers
     .filter((number) => number.time <= maxTime)
     .sort((a, b) => a.time - b.time);
+
   return (
     <Modal
       animationType="slide"
@@ -65,7 +68,7 @@ export default function StartTimeModal({
           style={durationStyle.btn__item}
           onPress={() => setModalVisible(false)}
         >
-          <Text style={durationStyle.btn__item_text}>Close</Text>
+          <Icon style={durationStyle.btn__item_icon} name="close" />
         </TouchableOpacity>
       </View>
     </Modal>

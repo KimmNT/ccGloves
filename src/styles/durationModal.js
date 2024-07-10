@@ -59,12 +59,14 @@ const styles = StyleSheet.create({
     bottom: res * 0.03,
     right: res * 0.03,
     backgroundColor: light,
-    paddingHorizontal: res * 0.03,
-    paddingVertical: res * 0.005,
-    borderRadius: res * 0.01,
+    width: res * 0.05,
+    height: res * 0.05,
+    borderRadius: (res * 0.05) / 2,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  btn__item_text: {
-    fontSize: res * 0.025,
+  btn__item_icon: {
+    fontSize: res * 0.03,
     fontWeight: "600",
   },
 });

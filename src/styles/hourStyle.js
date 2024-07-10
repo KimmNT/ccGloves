@@ -29,6 +29,11 @@ const styles = StyleSheet.create({
   },
   hour__calendar: {
     marginTop: res * 0.03,
+    borderWidth: 2,
+    borderColor: primary,
+    borderStyle: "solid",
+    borderRadius: res * 0.02,
+    overflow: "hidden",
   },
   hour__time: {
     marginTop: res * 0.03,
@@ -41,12 +46,12 @@ const styles = StyleSheet.create({
   time__picking: {
     flexDirection: "row",
     justifyContent: "space-around",
-    gap: res * 0.1,
+    gap: res * 0.05,
   },
   picking__item: {
     alignItems: "center",
     backgroundColor: primary,
-    flexGrow: 0.5,
+    flexGrow: 1,
     paddingVertical: res * 0.02,
     borderRadius: res * 0.02,
     gap: res * 0.01,
