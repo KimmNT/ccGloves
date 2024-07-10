@@ -34,14 +34,20 @@ export default function HomePage({ navigation }) {
             <View style={homeStyle.home__group}>
               <Text style={homeStyle.group__headline}>Our Services</Text>
               <View style={homeStyle.group__btns}>
-                <TouchableOpacity style={homeStyle.btn__container}>
+                <TouchableOpacity
+                  style={homeStyle.btn__container}
+                  onPress={() => navigation.navigate("HourOrder")}
+                >
                   <Image source={Clock} />
                   <View style={homeStyle.btn__text}>
                     <Text style={homeStyle.service}>Hire in</Text>
                     <Text style={homeStyle.type}>Hours</Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={homeStyle.btn__container}>
+                <TouchableOpacity
+                  style={homeStyle.btn__container}
+                  onPress={() => navigation.navigate("DayOrder")}
+                >
                   <Image source={Calendar} />
                   <View style={homeStyle.btn__text}>
                     <Text style={homeStyle.service}>Hire in</Text>

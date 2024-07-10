@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomePage from "./src/components/HomePage";
 import DetailPage from "./src/components/DetailPage";
 import Loading from "./src/components/Loading";
+import HourPage from "./src/components/HourPage";
+import DayPage from "./src/components/DayPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,6 +17,8 @@ export default function App() {
         <Stack.Screen name="Loading" component={Loading} />
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="Detail" component={DetailPage} />
+        <Stack.Screen name="HourOrder" component={HourPage} />
+        <Stack.Screen name="DayOrder" component={DayPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
