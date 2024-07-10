@@ -32,10 +32,15 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: primary,
     padding: res * 0.01,
     borderRadius: res * 0.02,
     gap: res * 0.05,
+  },
+  btn__active: {
+    backgroundColor: primary,
+  },
+  btn__inactive: {
+    backgroundColor: softRed,
   },
   detail__headerButtontext: {
     fontSize: res * 0.025,

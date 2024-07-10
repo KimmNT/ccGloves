@@ -1,11 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import shareStyle from "../styles/shareStyle";
 import homeStyle from "../styles/homeStyle";
 import detailStyle from "../styles/detailStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function DetailPage({ navigation, route }) {
+  const [navActive, setNavActive] = useState(0);
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
@@ -16,12 +17,27 @@ export default function DetailPage({ navigation, route }) {
           <View style={detailStyle.detail__container}>
             <View style={detailStyle.detail__header}>
               <View style={detailStyle.detail__headerButton}>
-                <TouchableOpacity style={detailStyle.detail__btn}>
+                <TouchableOpacity
+                  style={[
+                    navActive === 0
+                      ? detailStyle.btn__active
+                      : detailStyle.btn__inactive,
+                    detailStyle.detail__btn,
+                  ]}
+                  onPress={() => setNavActive(0)}
+                >
                   <Text style={detailStyle.detail__headerButtontext}>
                     OrderID
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={detailStyle.detail__btn}>
+                <TouchableOpacity
+                  style={
+                    navActive === 1
+                      ? detailStyle.btn__active
+                      : detailStyle.btn__inactive
+                  }
+                  onPress={() => setNavActive(1)}
+                >
                   <Text style={detailStyle.detail__headerButtontext}>
                     Phone number
                   </Text>
