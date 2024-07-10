@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import shareStyle from "../styles/shareStyle";
 import homeStyle from "../styles/homeStyle";
+import detailStyle from "../styles/detailStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function DetailPage({ navigation, route }) {
@@ -9,17 +10,27 @@ export default function DetailPage({ navigation, route }) {
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
         <View style={shareStyle.navbar}>
-          {/* <TouchableOpacity
-            style={shareStyle.navbar__icon}
-            onPress={() => navigation.goBack()}
-          >
-            <View style={shareStyle.navbar__icon_container}>
-              <Icon name="arrow-back" style={shareStyle.icon} />
-            </View>
-          </TouchableOpacity> */}
           <Text style={shareStyle.navbar__title}>Checking your order</Text>
         </View>
-        <View style={shareStyle.body}></View>
+        <View style={shareStyle.body}>
+          <View style={detailStyle.detail__container}>
+            <View style={detailStyle.detail__header}>
+              <View style={detailStyle.detail__headerButton}>
+                <TouchableOpacity style={detailStyle.detail__btn}>
+                  <Text style={detailStyle.detail__headerButtontext}>
+                    OrderID
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={detailStyle.detail__btn}>
+                  <Text style={detailStyle.detail__headerButtontext}>
+                    Phone number
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={detailStyle.detail__hearderInput}></View>
+            </View>
+          </View>
+        </View>
       </View>
       <View style={shareStyle.tab__container}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
