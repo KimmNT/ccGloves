@@ -44,8 +44,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: primary,
     flexGrow: 1,
-    padding: res * 0.01,
+    paddingVertical: res * 0.02,
     borderRadius: res * 0.02,
+    gap: res * 0.01,
   },
   picking__title: {
     color: light,
@@ -57,7 +58,10 @@ const styles = StyleSheet.create({
     height: res * 0.003,
     backgroundColor: light,
   },
-  picking__input: {},
+  picking__input: {
+    color: light,
+    fontSize: res * 0.03,
+  },
 });
 
 export default styles;

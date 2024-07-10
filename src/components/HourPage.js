@@ -21,6 +21,8 @@ import moment from "moment";
 export default function HourPage({ navigation }) {
   const [selectedDate, setSelectedDate] = useState("");
   const [markedDates, setMarkedDates] = useState({});
+  const [duration, setDuration] = useState(0);
+  const [startTime, setStartTime] = useState(0);
 
   const onDayPress = (day) => {
     const formattedDate = moment(day.dateString).format("DD/MM/YYYY");
@@ -86,14 +88,14 @@ export default function HourPage({ navigation }) {
                 </Text>
                 <View style={hourStyle.time__picking}>
                   <View style={hourStyle.picking__item}>
-                    <Text style={hourStyle.picking__title}>Duration (hr)</Text>
+                    <Text style={hourStyle.picking__title}>Duration</Text>
                     <View style={hourStyle.picking__line}></View>
-                    <TextInput style={hourStyle.picking__input} />
+                    <Text style={hourStyle.picking__input}>{duration} hrs</Text>
                   </View>
                   <View style={hourStyle.picking__item}>
                     <Text style={hourStyle.picking__title}>Start time</Text>
                     <View style={hourStyle.picking__line}></View>
-                    <TextInput style={hourStyle.picking__input} />
+                    <Text style={hourStyle.picking__input}>{startTime}H</Text>
                   </View>
                 </View>
               </View>
@@ -101,6 +103,7 @@ export default function HourPage({ navigation }) {
           </View>
         </View>
       </ScrollView>
+      <View></View>
     </KeyboardAvoidingView>
   );
 }
