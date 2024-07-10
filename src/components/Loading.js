@@ -12,12 +12,15 @@ import shareStyle from "../styles/shareStyle";
 import loadingStyle from "../styles/loadingStyle";
 
 import LoadingElip from "../images/loadingElip.png";
-export default function Loading() {
+export default function Loading({ navigation }) {
   return (
     <View style={shareStyle.container}>
       <Text style={loadingStyle.loading__textUpper}>We are here for your</Text>
       <Text style={loadingStyle.loading__textLower}>cleaning time!</Text>
-      <TouchableOpacity style={loadingStyle.loading__parent}>
+      <TouchableOpacity
+        style={loadingStyle.loading__parent}
+        onPress={() => navigation.navigate("Home")}
+      >
         <View style={loadingStyle.loading__child}>
           <Text style={loadingStyle.loading__text}>ccGloves</Text>
         </View>
