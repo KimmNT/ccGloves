@@ -1,4 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  TextInput,
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
 import shareStyle from "../styles/shareStyle";
 import homeStyle from "../styles/homeStyle";
@@ -7,6 +14,17 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default function DetailPage({ navigation, route }) {
   const [navActive, setNavActive] = useState(0);
+  const [number, setNumber] = useState("");
+  const [text, setText] = useState("");
+  const hideKeyboard = () => {
+    Keyboard.dismiss();
+  };
+  const handleChange = (text) => {
+    // Use a regex to ensure only numbers are allowed
+    if (/^\d*$/.test(text)) {
+      setNumber(text);
+    }
+  };
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
@@ -26,24 +44,73 @@ export default function DetailPage({ navigation, route }) {
                   ]}
                   onPress={() => setNavActive(0)}
                 >
-                  <Text style={detailStyle.detail__headerButtontext}>
-                    OrderID
+                  <Text
+                    style={[
+                      navActive === 0
+                        ? detailStyle.text__active
+                        : detailStyle.text__inactive,
+                    ]}
+                    onPress={() => setNavActive(0)}
+                  >
+                    Order ID
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={
+                  style={[
                     navActive === 1
                       ? detailStyle.btn__active
-                      : detailStyle.btn__inactive
-                  }
+                      : detailStyle.btn__inactive,
+                    detailStyle.detail__btn,
+                  ]}
                   onPress={() => setNavActive(1)}
                 >
-                  <Text style={detailStyle.detail__headerButtontext}>
+                  <Text
+                    style={[
+                      navActive === 1
+                        ? detailStyle.text__active
+                        : detailStyle.text__inactive,
+                    ]}
+                    onPress={() => setNavActive(1)}
+                  >
                     Phone number
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={detailStyle.detail__hearderInput}></View>
+              <View style={detailStyle.detail__containerInput}>
+                <View style={detailStyle.detail__hearderInput}>
+                  <View>
+                    {navActive === 0 ? (
+                      <TextInput
+                        style={detailStyle.detail__input}
+                        placeholder="Type your order #ID"
+                        onChangeText={(newText) => setText(newText)}
+                      ></TextInput>
+                    ) : (
+                      <TextInput
+                        style={detailStyle.detail__input}
+                        placeholder="Type your phone number"
+                        keyboardType="numeric"
+                        onChangeText={handleChange}
+                      ></TextInput>
+                    )}
+                  </View>
+                </View>
+                <TouchableOpacity
+                  style={detailStyle.search__icon_container}
+                  title="Hide Keyboard"
+                  onPress={hideKeyboard}
+                >
+                  <Icon name="search" style={detailStyle.search__icon} />
+                </TouchableOpacity>
+              </View>
+              <Text style={homeStyle.group__headline}>Your orders list</Text>
+              <View style={detailStyle.orderBox}>
+                <View style={detailStyle.orderBox_name}>
+                  <Text style={detailStyle.orderBox__text}>Order ID</Text>
+                  <Text style={detailStyle.orderBox__text}>Service</Text>
+                  <Text style={detailStyle.orderBox__text}>Status</Text>
+                </View>
+              </View>
             </View>
           </View>
         </View>
