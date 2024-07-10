@@ -27,7 +27,7 @@ export default function DetailPage({ navigation, route }) {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={detailStyle.detail__hearderBox}></View>
+              <View style={detailStyle.detail__hearderInput}></View>
             </View>
           </View>
         </View>
