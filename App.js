@@ -7,11 +7,8 @@ import DetailPage from "./src/components/DetailPage";
 import Loading from "./src/components/Loading";
 import HourPage from "./src/components/HourPage";
 import DayPage from "./src/components/DayPage";
-<<<<<<< HEAD
 import Testing from "./src/Test/Testing";
-=======
 import OrderDetail from "./src/components/OrderDetail";
->>>>>>> duyDev
 
 const Stack = createNativeStackNavigator();
 
