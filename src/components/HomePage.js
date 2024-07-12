@@ -16,8 +16,6 @@ import Calendar from "../images/calendar.png";
 import Customer from "../images/customer-service.png";
 
 export default function HomePage({ navigation }) {
-  const [input, setInput] = useState("");
-
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>

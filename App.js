@@ -7,6 +7,7 @@ import DetailPage from "./src/components/DetailPage";
 import Loading from "./src/components/Loading";
 import HourPage from "./src/components/HourPage";
 import DayPage from "./src/components/DayPage";
+import Testing from "./src/Test/Testing";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +15,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Testing" component={Testing} />
         <Stack.Screen name="Loading" component={Loading} />
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="Detail" component={DetailPage} />

@@ -44,10 +44,17 @@ export default function HourPage({ navigation }) {
   }, [duration]);
 
   const onDayPress = (day) => {
-    const formattedDate = moment(day.dateString).format("DD/MM/YYYY");
+    const selectedDay = moment(day.dateString);
+    const currentDay = moment().startOf("day"); // Get current day without time
+
+    if (selectedDay.isBefore(currentDay)) {
+      Alert.alert("Invalid Date", "You cannot select a date in the past.");
+      return;
+    }
+
+    const formattedDate = selectedDay.format("DD/MM/YYYY");
     setSelectedDate(formattedDate);
-    // Alert.alert("Selected Date", formattedDate);
-    // Update markedDates with the selected date
+
     setMarkedDates({
       [day.dateString]: {
         selected: true,
