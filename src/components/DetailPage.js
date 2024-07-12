@@ -5,6 +5,8 @@ import {
   View,
   TextInput,
   Keyboard,
+  Button,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useState } from "react";
 import shareStyle from "../styles/shareStyle";
@@ -16,6 +18,7 @@ export default function DetailPage({ navigation, route }) {
   const [navActive, setNavActive] = useState(0);
   const [number, setNumber] = useState("");
   const [text, setText] = useState("");
+  const [displayText, setDisplayText] = useState("");
   const hideKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -25,6 +28,10 @@ export default function DetailPage({ navigation, route }) {
       setNumber(text);
     }
   };
+  const handlePress = () => {
+    hideKeyboard();
+    setDisplayText(text);
+  };
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
@@ -32,87 +39,102 @@ export default function DetailPage({ navigation, route }) {
           <Text style={shareStyle.navbar__title}>Checking your order</Text>
         </View>
         <View style={shareStyle.body}>
-          <View style={detailStyle.detail__container}>
-            <View style={detailStyle.detail__header}>
-              <View style={detailStyle.detail__headerButton}>
-                <TouchableOpacity
-                  style={[
-                    navActive === 0
-                      ? detailStyle.btn__active
-                      : detailStyle.btn__inactive,
-                    detailStyle.detail__btn,
-                  ]}
-                  onPress={() => setNavActive(0)}
-                >
-                  <Text
+          <TouchableWithoutFeedback onPress={hideKeyboard}>
+            <View style={detailStyle.detail__container}>
+              <View style={detailStyle.detail__header}>
+                <View style={detailStyle.detail__headerButton}>
+                  <TouchableOpacity
                     style={[
                       navActive === 0
-                        ? detailStyle.text__active
-                        : detailStyle.text__inactive,
+                        ? detailStyle.btn__active
+                        : detailStyle.btn__inactive,
+                      detailStyle.detail__btn,
                     ]}
                     onPress={() => setNavActive(0)}
                   >
-                    Order ID
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[
-                    navActive === 1
-                      ? detailStyle.btn__active
-                      : detailStyle.btn__inactive,
-                    detailStyle.detail__btn,
-                  ]}
-                  onPress={() => setNavActive(1)}
-                >
-                  <Text
+                    <Text
+                      style={[
+                        navActive === 0
+                          ? detailStyle.text__active
+                          : detailStyle.text__inactive,
+                      ]}
+                      onPress={() => setNavActive(0)}
+                    >
+                      Order ID
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
                     style={[
                       navActive === 1
-                        ? detailStyle.text__active
-                        : detailStyle.text__inactive,
+                        ? detailStyle.btn__active
+                        : detailStyle.btn__inactive,
+                      detailStyle.detail__btn,
                     ]}
                     onPress={() => setNavActive(1)}
                   >
-                    Phone number
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={detailStyle.detail__containerInput}>
-                <View style={detailStyle.detail__hearderInput}>
-                  <View>
-                    {navActive === 0 ? (
-                      <TextInput
-                        style={detailStyle.detail__input}
-                        placeholder="Type your order #ID"
-                        onChangeText={(newText) => setText(newText)}
-                      ></TextInput>
-                    ) : (
-                      <TextInput
-                        style={detailStyle.detail__input}
-                        placeholder="Type your phone number"
-                        keyboardType="numeric"
-                        onChangeText={handleChange}
-                      ></TextInput>
-                    )}
+                    <Text
+                      style={[
+                        navActive === 1
+                          ? detailStyle.text__active
+                          : detailStyle.text__inactive,
+                      ]}
+                      onPress={() => setNavActive(1)}
+                    >
+                      Phone number
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={detailStyle.detail__containerInput}>
+                  <View style={detailStyle.detail__hearderInput}>
+                    <View>
+                      {navActive === 0 ? (
+                        <TextInput
+                          style={detailStyle.detail__input}
+                          placeholder="Type your order #ID"
+                          onChangeText={(newText) => setText(newText)}
+                          defaultValue={text}
+                        ></TextInput>
+                      ) : (
+                        <TextInput
+                          style={detailStyle.detail__input}
+                          placeholder="Type your phone number"
+                          keyboardType="numeric"
+                          onChangeText={handleChange}
+                          value={number}
+                        ></TextInput>
+                      )}
+                    </View>
                   </View>
+                  <TouchableOpacity
+                    style={detailStyle.search__icon_container}
+                    onPress={handlePress}
+                  >
+                    <Icon name="search" style={detailStyle.search__icon} />
+                  </TouchableOpacity>
                 </View>
+                <Text style={homeStyle.group__headline}>Your orders list</Text>
                 <TouchableOpacity
-                  style={detailStyle.search__icon_container}
-                  title="Hide Keyboard"
-                  onPress={hideKeyboard}
+                  style={detailStyle.orderBox}
+                  onPress={() => navigation.navigate("OrderDetail")}
                 >
-                  <Icon name="search" style={detailStyle.search__icon} />
+                  <View style={detailStyle.orderBox__name}>
+                    <Text style={detailStyle.orderBox__textName}>Order ID</Text>
+                    <Text style={detailStyle.orderBox__textName}>Service</Text>
+                    <Text style={detailStyle.orderBox__textName}>Status</Text>
+                  </View>
+                  <View style={detailStyle.orderBox__data}>
+                    <Text style={detailStyle.orderBox__textData}>
+                      {displayText}
+                    </Text>
+                    <Text style={detailStyle.orderBox__textData}>
+                      Hire in hour
+                    </Text>
+                    <Text style={detailStyle.orderBox__textData}>{number}</Text>
+                  </View>
                 </TouchableOpacity>
-              </View>
-              <Text style={homeStyle.group__headline}>Your orders list</Text>
-              <View style={detailStyle.orderBox}>
-                <View style={detailStyle.orderBox_name}>
-                  <Text style={detailStyle.orderBox__text}>Order ID</Text>
-                  <Text style={detailStyle.orderBox__text}>Service</Text>
-                  <Text style={detailStyle.orderBox__text}>Status</Text>
-                </View>
               </View>
             </View>
-          </View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
       <View style={shareStyle.tab__container}>
