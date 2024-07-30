@@ -23,8 +23,26 @@ export default function Testing() {
 
   const handleSumit = async () => {
     await addDoc(collection(db, "orderList"), {
-      Id: generateRandomString(10),
-      name: generateRandomString(5),
+      id: generateRandomString(20),
+      type: "Daily",
+      userFirstName: "Duy",
+      userLastName: "Vu",
+      userEmail: "duyvu@gmail.com",
+      userPhone: "123123123",
+      userAddress:
+        "68 Nguyen Ngoc Phuong, phuong 19, quan Binh Thanh, thanh pho HCM",
+      status: "Working",
+      paymentType: 1,
+      houseSize: 55,
+      cleaningTool: 1,
+      workingTime: [
+        {
+          date: "10/05/2024",
+          start: 15,
+          duration: 3,
+        },
+      ],
+      total: 11420,
     });
     getData();
   };

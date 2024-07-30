@@ -15,6 +15,7 @@ export default function DurationModals({
   setModalVisible,
   selectedDuration,
   startTimeValue,
+  selectedDate,
 }) {
   const numbers = [
     { time: 3 },

@@ -9,25 +9,37 @@ import {
 import React from "react";
 import durationStyle from "../../styles/durationModal";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import moment from "moment";
 
 export default function StartTimeModal({
   modalVisible,
   setModalVisible,
   durationValue,
   selectedStartTime,
+  selectedDate,
 }) {
+  const currentDate = moment().format("DD/MM/YYYY");
+
   const getCurrentHour = () => {
     const date = new Date();
     return date.getHours();
   };
 
   const generateTimesArray = () => {
-    const currentHour = getCurrentHour();
-    const times = [];
-    for (let i = currentHour + 1; i <= 22; i++) {
-      times.push({ time: i });
+    if (currentDate === selectedDate) {
+      const currentHour = getCurrentHour();
+      const times = [];
+      for (let i = currentHour + 1; i <= 22; i++) {
+        times.push({ time: i });
+      }
+      return times;
+    } else {
+      const times = [];
+      for (let i = 7; i <= 22; i++) {
+        times.push({ time: i });
+      }
+      return times;
     }
-    return times;
   };
 
   const numbers = generateTimesArray();

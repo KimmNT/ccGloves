@@ -29,6 +29,7 @@ export default function HourPage({ navigation }) {
   const [duration, setDuration] = useState(3);
   const [startTime, setStartTime] = useState(0);
   const [paymentCount, setPaymentCount] = useState(0);
+  const [currentHour, setCurrentHour] = useState(new Date().getHours());
 
   useEffect(() => {
     const date = new Date();
@@ -46,9 +47,14 @@ export default function HourPage({ navigation }) {
   const onDayPress = (day) => {
     const selectedDay = moment(day.dateString);
     const currentDay = moment().startOf("day"); // Get current day without time
+    const currentTime = new Date();
 
     if (selectedDay.isBefore(currentDay)) {
       Alert.alert("Invalid Date", "You cannot select a date in the past.");
+      return;
+    }
+    if (selectedDay.isSame(currentDay, "day") && currentTime.getHours() >= 19) {
+      Alert.alert("We are closed", "Please choose another day!");
       return;
     }
 
@@ -77,6 +83,10 @@ export default function HourPage({ navigation }) {
   };
   const handleSelectStartTime = (number) => {
     setStartTime(number);
+  };
+
+  const handleNavigateToHouseSize = () => {
+    navigation.navigate("HouseSize", { currentPrice: paymentCount });
   };
 
   return (
@@ -151,7 +161,10 @@ export default function HourPage({ navigation }) {
         <View style={shareStyle.btn__value}>
           <View style={shareStyle.btn__value_content}>
             <Text style={shareStyle.value__text}>{paymentCount}¥</Text>
-            <TouchableOpacity style={shareStyle.value__icon_container}>
+            <TouchableOpacity
+              style={shareStyle.value__icon_container}
+              onPress={handleNavigateToHouseSize}
+            >
               <Icon name="arrow-forward" style={shareStyle.value__icon} />
             </TouchableOpacity>
           </View>
@@ -164,12 +177,14 @@ export default function HourPage({ navigation }) {
         setModalVisible={setModalVisible}
         selectedDuration={handleSelectDuration}
         startTimeValue={startTime}
+        selectedDate={selectedDate}
       />
       <StartTimeModal
         modalVisible={starTimeModalVisible}
         setModalVisible={setStartTimeModalVisible}
         selectedStartTime={handleSelectStartTime}
         durationValue={duration}
+        selectedDate={selectedDate}
       />
     </KeyboardAvoidingView>
   );

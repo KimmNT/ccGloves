@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     backgroundColor: primary,
-    borderTopLeftRadius: res * 0.05,
-    borderTopRightRadius: res * 0.05,
+    borderTopLeftRadius: res * 0.03,
+    borderTopRightRadius: res * 0.03,
   },
   modal__content: {
     justifyContent: "center",
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     fontSize: res * 0.025,
     fontWeight: "600",
     color: light,
+    marginTop: res * 0.02,
   },
   numer__list: {
     display: "flex",

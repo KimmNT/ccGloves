@@ -28,15 +28,15 @@ const styles = StyleSheet.create({
     fontSize: res * 0.02,
   },
   hour__calendar: {
-    marginTop: res * 0.03,
-    borderWidth: 2,
+    marginTop: res * 0.02,
+    borderWidth: 1,
     borderColor: primary,
     borderStyle: "solid",
     borderRadius: res * 0.02,
     overflow: "hidden",
   },
   hour__time: {
-    marginTop: res * 0.03,
+    marginTop: res * 0.02,
     gap: res * 0.02,
   },
   time__headline: {
