@@ -19,7 +19,7 @@ export default function HomePage({ navigation }) {
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
-        <View style={shareStyle.navbar}>
+        <View style={[shareStyle.navbar, shareStyle.navbar__two]}>
           <Text style={shareStyle.navbar__title}>Good Morning!</Text>
           <TouchableOpacity style={shareStyle.navbar__icon}>
             <View style={shareStyle.navbar__icon_container}>

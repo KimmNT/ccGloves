@@ -17,7 +17,7 @@ export default function OrderDetail({ navigation, route }) {
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
-        <View style={shareStyle.navbar}>
+        <View style={[shareStyle.navbar, shareStyle.navbar__two]}>
           <TouchableOpacity
             style={shareStyle.navbar__icon}
             onPress={() => navigation.goBack()}

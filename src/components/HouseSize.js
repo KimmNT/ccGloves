@@ -7,7 +7,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import HouseArea from "../images/houseSquare.png";
 
 export default function HouseSize({ navigation, route }) {
-  const { currentPrice } = route.params || {};
+  const { currentPrice, orderDate, orderType } = route.params || {};
 
   const [selectedRoom, setSelectedRoom] = useState(0);
   const [paymentCount, setPaymentCount] = useState(0);
@@ -26,13 +26,18 @@ export default function HouseSize({ navigation, route }) {
   };
 
   const handleNavigate = () => {
-    navigation.navigate("Info", { currentPrice: paymentCount });
+    navigation.navigate("Info", {
+      orderType: orderType,
+      currentPrice: paymentCount,
+      orderDate: orderDate,
+      roomSize: selectedRoom,
+    });
   };
 
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
-        <View style={shareStyle.navbar}>
+        <View style={[shareStyle.navbar, shareStyle.navbar__two]}>
           <TouchableOpacity
             style={shareStyle.navbar__icon}
             onPress={() => navigation.goBack()}
@@ -48,8 +53,8 @@ export default function HouseSize({ navigation, route }) {
             <Image source={HouseArea} />
             <View style={hourStyle.headline_text}>
               <Text style={hourStyle.item}>Price/m2: 80¥</Text>
-              <Text style={hourStyle.item}>A room square: 10m2</Text>
-              <Text style={hourStyle.item}>Maximum square: 60m2</Text>
+              <Text style={hourStyle.item}>Minimum area: 10m2</Text>
+              <Text style={hourStyle.item}>Maximum area: 60m2</Text>
             </View>
           </View>
           <View style={houseSize.room__container}>

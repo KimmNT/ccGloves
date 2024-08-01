@@ -13,9 +13,10 @@ import React, { useState } from "react";
 import shareStyle from "../styles/shareStyle";
 import infoStyle from "../styles/infoStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { or } from "firebase/firestore";
 
 export default function InfoPage({ navigation, route }) {
-  const { currentPrice } = route.params || {};
+  const { currentPrice, orderDate, roomSize, orderType } = route.params || {};
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,24 +31,27 @@ export default function InfoPage({ navigation, route }) {
 
   const handleSumarry = () => {
     if (
-      firstName === "" ||
-      lastName === "" ||
-      phone === 0 ||
-      email === "" ||
-      prefecture === "" ||
-      city === "" ||
-      district === "" ||
-      postCode === "" ||
+      firstName === "" &&
+      lastName === "" &&
+      phone === 0 &&
+      email === "" &&
+      prefecture === "" &&
+      city === "" &&
+      district === "" &&
+      postCode === "" &&
       addDetail === ""
     ) {
       Alert.alert(
         "Not enough information",
-        "Seem like you missing some fields. Please fill all the boxes to continue!",
+        "Seem like you missing some fields. Please complete all required fields to continue!",
         [{ text: "OK", onPress: () => console.log("OK Pressed") }]
       );
     } else {
       navigation.navigate("Summary", {
+        orderType: orderType,
         currentPrice: currentPrice,
+        orderDate: orderDate,
+        roomSize: roomSize,
         userInfo: {
           firstName: firstName,
           lastName: lastName,
@@ -70,7 +74,7 @@ export default function InfoPage({ navigation, route }) {
       style={shareStyle.container}
     >
       <ScrollView style={shareStyle.content}>
-        <View style={shareStyle.navbar}>
+        <View style={[shareStyle.navbar, shareStyle.navbar__two]}>
           <TouchableOpacity
             style={shareStyle.navbar__icon}
             onPress={() => navigation.goBack()}
@@ -157,7 +161,7 @@ export default function InfoPage({ navigation, route }) {
                 />
               </View>
               <View style={[infoStyle.info__input, infoStyle.input__half]}>
-                <Text style={infoStyle.box__title}>Postcode</Text>
+                <Text style={infoStyle.box__title}>Post code</Text>
                 <TextInput
                   style={infoStyle.box__input}
                   placeholder="Type here"

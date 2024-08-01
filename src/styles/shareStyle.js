@@ -37,17 +37,24 @@ const styles = StyleSheet.create({
     top: 0,
     display: "flex",
     flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
     paddingHorizontal: res * 0.03,
     paddingVertical: res * 0.03,
+
     // gap: res * 0.15,
   },
+  navbar__one: {
+    justifyContent: "center",
+  },
+  navbar__two: {
+    justifyContent: "space-between",
+  },
+
   navbar__title: {
     fontSize: res * 0.025,
     fontWeight: "600",
     color: light,
     justifyContent: "center",
+    alignItems: "center",
   },
   navbar__icon: {},
   navbar__icon_container: {

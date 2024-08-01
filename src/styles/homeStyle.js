@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: res * 0.02,
   },
   type: {
-    fontSize: res * 0.03,
+    fontSize: res * 0.02,
     fontWeight: "900",
   },
 });

@@ -12,6 +12,8 @@ import OrderDetail from "./src/components/OrderDetail";
 import HouseSize from "./src/components/HouseSize";
 import InfoPage from "./src/components/InfoPage";
 import SummaryPage from "./src/components/SummaryPage";
+import PaymentPage from "./src/components/PaymentPage";
+import CompletedPage from "./src/components/CompletedPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,8 @@ export default function App() {
         <Stack.Screen name="HouseSize" component={HouseSize} />
         <Stack.Screen name="Info" component={InfoPage} />
         <Stack.Screen name="Summary" component={SummaryPage} />
+        <Stack.Screen name="Payment" component={PaymentPage} />
+        <Stack.Screen name="Completed" component={CompletedPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -10,17 +10,6 @@ export default function Testing() {
     getData();
   }, []);
 
-  //AUTO GENERATE STRING AS ID
-  const generateRandomString = (length) => {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    let result = "";
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  };
-
   const handleSumit = async () => {
     await addDoc(collection(db, "orderList"), {
       id: generateRandomString(20),

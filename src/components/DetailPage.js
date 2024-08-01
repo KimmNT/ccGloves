@@ -35,7 +35,7 @@ export default function DetailPage({ navigation, route }) {
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
-        <View style={shareStyle.navbar}>
+        <View style={[shareStyle.navbar, shareStyle.navbar__one]}>
           <Text style={shareStyle.navbar__title}>Checking your order</Text>
         </View>
         <View style={shareStyle.body}>

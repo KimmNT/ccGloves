@@ -86,7 +86,17 @@ export default function HourPage({ navigation }) {
   };
 
   const handleNavigateToHouseSize = () => {
-    navigation.navigate("HouseSize", { currentPrice: paymentCount });
+    navigation.navigate("HouseSize", {
+      orderType: 0,
+      currentPrice: paymentCount,
+      orderDate: [
+        {
+          selectedDate: selectedDate,
+          startTime: startTime,
+          duration: duration,
+        },
+      ],
+    });
   };
 
   return (
@@ -96,7 +106,7 @@ export default function HourPage({ navigation }) {
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <View style={shareStyle.content}>
-        <View style={shareStyle.navbar}>
+        <View style={[shareStyle.navbar, shareStyle.navbar__two]}>
           <TouchableOpacity
             style={shareStyle.navbar__icon}
             onPress={() => navigation.goBack()}
@@ -147,7 +157,7 @@ export default function HourPage({ navigation }) {
                   >
                     <Text style={hourStyle.picking__title}>Start time</Text>
                     <View style={hourStyle.picking__line}></View>
-                    <Text style={hourStyle.picking__input}>{startTime}H</Text>
+                    <Text style={hourStyle.picking__input}>{startTime}:00</Text>
                   </TouchableOpacity>
                 </View>
               </View>
