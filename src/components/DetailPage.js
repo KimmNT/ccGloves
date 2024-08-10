@@ -8,30 +8,57 @@ import {
   Button,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import shareStyle from "../styles/shareStyle";
 import homeStyle from "../styles/homeStyle";
 import detailStyle from "../styles/detailStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export default function DetailPage({ navigation, route }) {
   const [navActive, setNavActive] = useState(0);
   const [number, setNumber] = useState("");
   const [text, setText] = useState("");
-  const [displayText, setDisplayText] = useState("");
+  const [orders, setOrders] = useState([]);
+
   const hideKeyboard = () => {
     Keyboard.dismiss();
   };
-  const handleChange = (text) => {
-    // Use a regex to ensure only numbers are allowed
-    if (/^\d*$/.test(text)) {
-      setNumber(text);
+
+  const handleTextChange = (newText) => {
+    setText(newText.toUpperCase());
+  };
+
+  const searchById = async (searchId) => {
+    try {
+      const q = query(collection(db, "orderList"), where("id", "==", text));
+      const querySnapshot = await getDocs(q);
+      const results = querySnapshot.docs.map((doc) => doc.data());
+      console.log("Search results by ID:", results);
+      setOrders(results);
+    } catch (error) {
+      console.error("Error searching by ID: ", error);
     }
   };
-  const handlePress = () => {
-    hideKeyboard();
-    setDisplayText(text);
+  const searchByUserPhone = async (searchPhone) => {
+    try {
+      const q = query(
+        collection(db, "orderList"),
+        where("userPhone", "==", number)
+      );
+      const querySnapshot = await getDocs(q);
+      const results = querySnapshot.docs.map((doc) => doc.data());
+      setOrders(results);
+    } catch (error) {
+      console.error("Error searching by User Phone: ", error);
+    }
   };
+
+  const handleToItemDetail = (order) => {
+    navigation.navigate("OrderDetail", { orderDetail: order });
+  };
+
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
@@ -50,7 +77,10 @@ export default function DetailPage({ navigation, route }) {
                         : detailStyle.btn__inactive,
                       detailStyle.detail__btn,
                     ]}
-                    onPress={() => setNavActive(0)}
+                    onPress={() => {
+                      setNavActive(0);
+                      setOrders([]);
+                    }}
                   >
                     <Text
                       style={[
@@ -58,7 +88,6 @@ export default function DetailPage({ navigation, route }) {
                           ? detailStyle.text__active
                           : detailStyle.text__inactive,
                       ]}
-                      onPress={() => setNavActive(0)}
                     >
                       Order ID
                     </Text>
@@ -70,7 +99,10 @@ export default function DetailPage({ navigation, route }) {
                         : detailStyle.btn__inactive,
                       detailStyle.detail__btn,
                     ]}
-                    onPress={() => setNavActive(1)}
+                    onPress={() => {
+                      setNavActive(1);
+                      setOrders([]);
+                    }}
                   >
                     <Text
                       style={[
@@ -78,7 +110,6 @@ export default function DetailPage({ navigation, route }) {
                           ? detailStyle.text__active
                           : detailStyle.text__inactive,
                       ]}
-                      onPress={() => setNavActive(1)}
                     >
                       Phone number
                     </Text>
@@ -86,52 +117,92 @@ export default function DetailPage({ navigation, route }) {
                 </View>
                 <View style={detailStyle.detail__containerInput}>
                   <View style={detailStyle.detail__hearderInput}>
-                    <View>
-                      {navActive === 0 ? (
-                        <TextInput
-                          style={detailStyle.detail__input}
-                          placeholder="Type your order #ID"
-                          onChangeText={(newText) => setText(newText)}
-                          defaultValue={text}
-                        ></TextInput>
-                      ) : (
-                        <TextInput
-                          style={detailStyle.detail__input}
-                          placeholder="Type your phone number"
-                          keyboardType="numeric"
-                          onChangeText={handleChange}
-                          value={number}
-                        ></TextInput>
-                      )}
-                    </View>
+                    {navActive === 0 ? (
+                      <TextInput
+                        style={detailStyle.detail__input}
+                        placeholder="Type your order #ID"
+                        onChangeText={handleTextChange}
+                        value={text}
+                      />
+                    ) : (
+                      <TextInput
+                        style={detailStyle.detail__input}
+                        placeholder="Type your phone number"
+                        keyboardType="numeric"
+                        onChangeText={(newText) => setNumber(newText)}
+                        value={number}
+                      ></TextInput>
+                    )}
                   </View>
-                  <TouchableOpacity
-                    style={detailStyle.search__icon_container}
-                    onPress={handlePress}
-                  >
-                    <Icon name="search" style={detailStyle.search__icon} />
-                  </TouchableOpacity>
+                  {navActive === 0 ? (
+                    <TouchableOpacity
+                      style={detailStyle.search__icon_container}
+                      onPress={searchById}
+                    >
+                      <Icon name="search" style={detailStyle.search__icon} />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      style={detailStyle.search__icon_container}
+                      onPress={searchByUserPhone}
+                    >
+                      <Icon name="search" style={detailStyle.search__icon} />
+                    </TouchableOpacity>
+                  )}
                 </View>
                 <Text style={homeStyle.group__headline}>Your orders list</Text>
-                <TouchableOpacity
-                  style={detailStyle.orderBox}
-                  onPress={() => navigation.navigate("OrderDetail")}
-                >
-                  <View style={detailStyle.orderBox__name}>
-                    <Text style={detailStyle.orderBox__textName}>Order ID</Text>
-                    <Text style={detailStyle.orderBox__textName}>Service</Text>
-                    <Text style={detailStyle.orderBox__textName}>Status</Text>
-                  </View>
-                  <View style={detailStyle.orderBox__data}>
-                    <Text style={detailStyle.orderBox__textData}>
-                      {displayText}
-                    </Text>
-                    <Text style={detailStyle.orderBox__textData}>
-                      Hire in hour
-                    </Text>
-                    <Text style={detailStyle.orderBox__textData}>{number}</Text>
-                  </View>
-                </TouchableOpacity>
+                {orders.map((order, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={detailStyle.orderBox}
+                    onPress={() => handleToItemDetail(order)}
+                  >
+                    <View style={detailStyle.orderBox__row}>
+                      <Text style={detailStyle.orderBox__textName}>
+                        Order ID
+                      </Text>
+                      <Text style={detailStyle.orderBox__textData}>
+                        #{order.id}
+                      </Text>
+                    </View>
+                    <View style={detailStyle.orderBox__row}>
+                      <Text style={detailStyle.orderBox__textName}>
+                        Service
+                      </Text>
+                      {order.type === 0 ? (
+                        <Text style={detailStyle.orderBox__textData}>
+                          Hire in Hours
+                        </Text>
+                      ) : order.type === 1 ? (
+                        <Text style={detailStyle.orderBox__textData}>
+                          Hire in Days
+                        </Text>
+                      ) : (
+                        <Text style={detailStyle.orderBox__textData}>
+                          Hire with Combo
+                        </Text>
+                      )}
+                    </View>
+                    <View style={detailStyle.orderBox__row}>
+                      <Text style={detailStyle.orderBox__textName}>Status</Text>
+                      {order.status === 0 ? (
+                        <Text style={detailStyle.orderBox__textData}>
+                          Waiting to confirm
+                        </Text>
+                      ) : order.status === 1 ? (
+                        <Text style={detailStyle.orderBox__textData}>
+                          Confirmed
+                        </Text>
+                      ) : order.status === 2 ? (
+                        <Text style={detailStyle.orderBox__textData}>
+                          Working
+                        </Text>
+                      ) : (
+                        <Text style={detailStyle.orderBox__textData}>Done</Text>
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
           </TouchableWithoutFeedback>

@@ -33,12 +33,12 @@ export default function CompletedPage({ navigation, route }) {
             <Text style={completedStyle.completed__headline}>
               Thank you for choosing us!
             </Text>
+            <Text style={completedStyle.completed__orderID}>
+              Your order ID: #{orderID}
+            </Text>
             <Image source={completedIcon} />
             <Text style={completedStyle.completed__text}>
               We'll be in touch shortly to confirm your order
-            </Text>
-            <Text style={completedStyle.completed__orderID}>
-              Your order ID: #{orderID}
             </Text>
             <TouchableOpacity
               style={completedStyle.completed__btn_container}

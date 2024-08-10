@@ -2,12 +2,9 @@ import {
   Alert,
   Image,
   KeyboardAvoidingView,
-  Modal,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -29,13 +26,12 @@ export default function HourPage({ navigation }) {
   const [duration, setDuration] = useState(3);
   const [startTime, setStartTime] = useState(0);
   const [paymentCount, setPaymentCount] = useState(0);
-  const [currentHour, setCurrentHour] = useState(new Date().getHours());
 
   useEffect(() => {
     const date = new Date();
     const hour = date.getHours();
 
-    if (hour > 7 && hour < 22) {
+    if (hour > 7 && hour < 19) {
       setStartTime(hour + 1);
     }
   }, []);

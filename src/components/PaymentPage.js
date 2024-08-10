@@ -1,8 +1,6 @@
 import {
   Alert,
   Image,
-  KeyboardAvoidingView,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -11,11 +9,11 @@ import {
   Keyboard,
   View,
 } from "react-native";
-import React, { act, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import shareStyle from "../styles/shareStyle";
 import paymentStyle from "../styles/paymentStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 
 import cashIcon from "../images/dollar.png";
@@ -31,6 +29,16 @@ export default function PaymentPage({ navigation, route }) {
   const [paymentOption, setPaymentOption] = useState(0);
   const [atmNumber, setAtmNumber] = useState(0);
   const [atmCVV, setAtmCVV] = useState(0);
+  const [createdDate, setCreatedDate] = useState("");
+
+  useEffect(() => {
+    const now = new Date();
+
+    const date = now.toLocaleDateString(); // e.g., '8/5/2024'
+    const time = now.toLocaleTimeString(); // e.g., '3:45:30 PM'
+
+    setCreatedDate(`${time} - ${date}`);
+  }, []);
 
   const handleCreateOrder = async () => {
     if (paymentOption === 1 && atmNumber === 0 && atmCVV === 0) {
@@ -56,6 +64,15 @@ export default function PaymentPage({ navigation, route }) {
         houseSize: roomSize,
         workingTime: orderDate,
         total: currentPrice,
+        createdDate: createdDate,
+        rating: {
+          ratingState: 0,
+          ratingOverall: "",
+          ratingQuality: "",
+          ratingStaff: "",
+          ratingBooking: "",
+          ratingMore: "",
+        },
       });
       navigation.navigate("Completed", { orderID: orderID });
     }

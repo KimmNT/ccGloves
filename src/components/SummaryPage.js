@@ -25,18 +25,56 @@ export default function SummaryPage({ navigation, route }) {
   const [infoModalVisible, setInfoModalVisible] = useState(false);
 
   useEffect(() => {
-    setOrderId(generateRandomString(10));
+    setOrderId(generateOrderID());
   }, []);
 
-  const generateRandomString = (length) => {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    let result = "";
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
+  const getRandomNumber = (min, max) => {
+    const random = Math.random() * (max - min) + min;
+    return parseInt(random);
   };
+
+  const generateOrderID = () => {
+    const date = new Date();
+    const months = [
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC",
+    ];
+    //for time
+    const currentHour = date.getHours();
+    const currentMinute = date.getMinutes();
+    const currentSecond = date.getSeconds();
+    const currentTime = `${currentHour}${currentMinute}${currentSecond}`;
+    //for date
+    const currentDay = date.getDate();
+    const currentMonth = months[date.getMonth()];
+    const currentYear = date.getFullYear().toString().substring(2, 4);
+    const currentDate = `${currentMonth}${currentDay}${currentYear}`;
+
+    const generatedID = `${currentTime}${currentDate}${getRandomNumber(
+      0,
+      1000
+    )}`;
+
+    return generatedID;
+  };
+
+  /*
+  for generate a random string without matching
+  get current time, ex: 132701
+  get currrent day, ex: AUG1024
+  generate random number from 0-1000: 500
+  combine: AUG1024132701500
+  */
 
   const handleNavigate = async () => {
     navigation.navigate("Payment", {

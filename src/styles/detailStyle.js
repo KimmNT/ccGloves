@@ -86,29 +86,23 @@ const styles = StyleSheet.create({
   },
   orderBox: {
     width: "100%",
-    flexDirection: "row",
-    padding: res * 0.02,
+    flexDirection: "column",
+    padding: res * 0.025,
     borderRadius: res * 0.03,
     gap: res * 0.02,
     justifyContent: "space-between",
     alignItems: "flex-start",
     backgroundColor: primary,
   },
-  orderBox__name: {
-    padding: res * 0.01,
-    gap: res * 0.02,
-    justifyContent: "center",
-    alignItems: "flex-start",
+  orderBox__row: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   orderBox__textName: {
     fontSize: res * 0.02,
     color: light,
-  },
-  orderBox__data: {
-    padding: res * 0.01,
-    gap: res * 0.02,
-    justifyContent: "center",
-    alignItems: "flex-start",
   },
   orderBox__textData: {
     fontSize: res * 0.02,

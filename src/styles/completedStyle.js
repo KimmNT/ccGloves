@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   completed__orderID: {
-    fontSize: res * 0.02,
+    fontSize: res * 0.025,
     fontWeight: "600",
     textAlign: "center",
   },
