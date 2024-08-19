@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     gap: res * 0.01,
   },
   item: {
-    fontSize: res * 0.02,
+    fontSize: res * 0.015,
   },
   hour__calendar: {
     marginTop: res * 0.02,

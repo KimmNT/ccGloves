@@ -9,14 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import shareStyle from "../styles/shareStyle";
 import infoStyle from "../styles/infoStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { or } from "firebase/firestore";
+import * as FileSystem from "expo-file-system";
 
 export default function InfoPage({ navigation, route }) {
-  const { currentPrice, orderDate, roomSize, orderType } = route.params || {};
+  const { currentPrice, orderDate, orderType } = route.params || {};
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -28,6 +28,46 @@ export default function InfoPage({ navigation, route }) {
   const [postCode, setPostCode] = useState("");
   const [addDetail, setAddDetail] = useState("");
   const [saveInfo, setSaveInfo] = useState(false);
+  const [storageValue, setStorageValue] = useState("");
+
+  useEffect(() => {
+    readDataFromFile("userInfo.txt");
+    if (storageValue !== "") {
+      // Split the string by the | delimiter
+      const parts = storageValue.split("|");
+
+      // Destructure the parts into individual variables
+      const [
+        firstName,
+        lastName,
+        phoneNumber,
+        email,
+        prefecture,
+        city,
+        district,
+        postCode,
+        addDetail,
+      ] = parts;
+      setFirstName(firstName);
+      setLastName(lastName);
+      setPhone(phoneNumber);
+      setEmail(email);
+      setPrefecture(prefecture);
+      setCity(city);
+      setDistrict(district);
+      setPostCode(postCode);
+      setAddDetail(addDetail);
+    }
+  }, [storageValue]);
+
+  useEffect(() => {
+    if (saveInfo) {
+      saveDataToFile(
+        "userInfo.txt",
+        `${firstName}|${lastName}|${phone}|${email}|${prefecture}|${city}|${district}|${postCode}|${addDetail}`
+      );
+    }
+  }, [saveInfo]);
 
   const handleSumarry = () => {
     if (
@@ -51,7 +91,6 @@ export default function InfoPage({ navigation, route }) {
         orderType: orderType,
         currentPrice: currentPrice,
         orderDate: orderDate,
-        roomSize: roomSize,
         userInfo: {
           firstName: firstName,
           lastName: lastName,
@@ -66,6 +105,27 @@ export default function InfoPage({ navigation, route }) {
       });
     }
   };
+
+  async function saveDataToFile(fileName, data) {
+    const fileUri = FileSystem.documentDirectory + fileName;
+    try {
+      await FileSystem.writeAsStringAsync(fileUri, data);
+      console.log("Data saved successfully to", fileUri);
+    } catch (error) {
+      console.error("Error saving data", error);
+    }
+  }
+  async function readDataFromFile(fileName) {
+    const fileUri = FileSystem.documentDirectory + fileName;
+    try {
+      const data = await FileSystem.readAsStringAsync(fileUri);
+      console.log("Data read successfully:", data);
+      return setStorageValue(data);
+    } catch (error) {
+      console.error("Error reading data", error);
+      return null;
+    }
+  }
 
   return (
     <KeyboardAvoidingView

@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: res * 0.04,
   },
   value__text: {
-    fontSize: res * 0.03,
+    fontSize: res * 0.025,
     fontWeight: "600",
   },
   value__icon_container: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   value__icon: {
-    fontSize: res * 0.03,
+    fontSize: res * 0.02,
   },
 });
 

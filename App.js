@@ -14,6 +14,8 @@ import InfoPage from "./src/components/InfoPage";
 import SummaryPage from "./src/components/SummaryPage";
 import PaymentPage from "./src/components/PaymentPage";
 import CompletedPage from "./src/components/CompletedPage";
+import ReviewPage from "./src/components/ReviewPage";
+import ReviewSuccess from "./src/components/ReviewSuccess";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +35,8 @@ export default function App() {
         <Stack.Screen name="Summary" component={SummaryPage} />
         <Stack.Screen name="Payment" component={PaymentPage} />
         <Stack.Screen name="Completed" component={CompletedPage} />
+        <Stack.Screen name="Review" component={ReviewPage} />
+        <Stack.Screen name="ReviewSuccess" component={ReviewSuccess} />
       </Stack.Navigator>
     </NavigationContainer>
   );

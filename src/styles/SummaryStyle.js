@@ -16,8 +16,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   order__id: {
-    marginTop: res * 0.05,
+    marginTop: res * 0.03,
     fontSize: res * 0.02,
+    fontWeight: "600",
+  },
+  payment__price: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: res * 0.02,
+    backgroundColor: btnColor,
+    borderRadius: res * 0.03,
+    paddingVertical: res * 0.02,
+    marginTop: res * 0.03,
+  },
+  payment__price_item: {
+    width: "85%",
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+  sub__payment_value: {
+    fontSize: res * 0.02,
+  },
+  payment__value: {
+    fontSize: res * 0.025,
     fontWeight: "600",
   },
   summary__item: {
@@ -25,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "column",
-    marginTop: res * 0.1,
+    marginTop: res * 0.05,
     gap: res * 0.03,
   },
   summary__btn: {
@@ -47,6 +69,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: light,
     fontWeight: "600",
+  },
+  payment__confirm_container: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: res * 0.15,
+  },
+  payment__confirm_content: {
+    backgroundColor: softYellow,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: res * 0.03,
+    paddingHorizontal: res * 0.015,
+    borderRadius: res * 0.04,
+  },
+  value__text: {
+    fontSize: res * 0.02,
+    textTransform: "uppercase",
+    fontWeight: "900",
   },
 });
 export default styles;

@@ -17,8 +17,7 @@ import OrderDetailModal from "./Models/OrderDetailModal";
 import InformationDetailModal from "./Models/InformationDetailModals";
 
 export default function SummaryPage({ navigation, route }) {
-  const { currentPrice, userInfo, orderDate, roomSize, orderType } =
-    route.params || [];
+  const { currentPrice, userInfo, orderDate, orderType } = route.params || [];
 
   const [orderId, setOrderId] = useState("");
   const [orderModalVisible, setOrderModalVisible] = useState(false);
@@ -79,10 +78,9 @@ export default function SummaryPage({ navigation, route }) {
   const handleNavigate = async () => {
     navigation.navigate("Payment", {
       orderType: orderType,
-      currentPrice: currentPrice,
+      currentPrice: currentPrice + currentPrice * 0.1,
       userInfo: userInfo,
       orderDate: orderDate,
-      roomSize: roomSize,
       orderID: orderId,
     });
   };
@@ -104,6 +102,24 @@ export default function SummaryPage({ navigation, route }) {
         <View style={shareStyle.body}>
           <View style={summaryStyle.summary__container}>
             <Text style={summaryStyle.order__id}>Order ID: #{orderId}</Text>
+            <View style={summaryStyle.payment__price}>
+              <View style={summaryStyle.payment__price_item}>
+                <Text style={summaryStyle.sub__payment_value}>Subtotal:</Text>
+                <Text style={summaryStyle.sub__payment_value}>
+                  {currentPrice}¥
+                </Text>
+              </View>
+              <View style={summaryStyle.payment__price_item}>
+                <Text style={summaryStyle.sub__payment_value}>Tax:</Text>
+                <Text style={summaryStyle.sub__payment_value}>10%</Text>
+              </View>
+              <View style={summaryStyle.payment__price_item}>
+                <Text style={summaryStyle.payment__value}>Total:</Text>
+                <Text style={summaryStyle.payment__value}>
+                  {currentPrice + currentPrice * 0.1}¥
+                </Text>
+              </View>
+            </View>
             <View style={summaryStyle.summary__item}>
               <TouchableOpacity
                 style={summaryStyle.summary__btn}
@@ -122,18 +138,15 @@ export default function SummaryPage({ navigation, route }) {
                 </Text>
               </TouchableOpacity>
             </View>
+            <TouchableOpacity
+              style={summaryStyle.payment__confirm_container}
+              onPress={handleNavigate}
+            >
+              <View style={summaryStyle.payment__confirm_content}>
+                <Text style={summaryStyle.value__text}>checkout now</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-        </View>
-      </View>
-      <View style={shareStyle.btn__value}>
-        <View style={shareStyle.btn__value_content}>
-          <Text style={shareStyle.value__text}>{currentPrice}¥</Text>
-          <TouchableOpacity
-            style={shareStyle.value__icon_container}
-            onPress={handleNavigate}
-          >
-            <Icon name="arrow-forward" style={shareStyle.value__icon} />
-          </TouchableOpacity>
         </View>
       </View>
       <OrderDetailModal

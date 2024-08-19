@@ -46,6 +46,10 @@ export default function OrderDetail({ navigation, route }) {
   const { background, value, text, icon } =
     statusStyles[orderDetail.status] || statusStyles[2];
 
+  const handleNavigateToReview = () => {
+    navigation.navigate("Review", { orderDetail: orderDetail });
+  };
+
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
@@ -92,16 +96,25 @@ export default function OrderDetail({ navigation, route }) {
                     style={[orderDetailStyle.od__status_value, value]}
                   />
                 </View>
-                {text === "Done" ? (
-                  <TouchableOpacity style={orderDetailStyle.od__rating}>
-                    <Text style={orderDetailStyle.od__rating_text}>
-                      Rating now
-                    </Text>
-                  </TouchableOpacity>
-                ) : (
-                  <></>
-                )}
               </View>
+              <View style={orderDetailStyle.od__headline_item}>
+                <Text style={orderDetailStyle.od__title}>Total price:</Text>
+                <Text style={orderDetailStyle.od__title}>
+                  {orderDetail.total.toLocaleString("de-DE")}¥
+                </Text>
+              </View>
+              {text === "Done" && orderDetail.ratingState === 0 ? (
+                <TouchableOpacity
+                  style={orderDetailStyle.od__rating}
+                  onPress={handleNavigateToReview}
+                >
+                  <Text style={orderDetailStyle.od__rating_text}>
+                    Leave a review to receive a coupon for your next order!
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <></>
+              )}
             </View>
             <View style={orderDetailStyle.od__content}>
               {orderDetail.workingTime.map((item, index) => (
@@ -121,25 +134,11 @@ export default function OrderDetail({ navigation, route }) {
                   <View style={orderDetailStyle.item__value}>
                     <Text style={orderDetailStyle.title}>Start time</Text>
                     <Text style={orderDetailStyle.value}>
-                      {item.startTime}:00
+                      {item.startTime}:00 - {item.startTime + item.duration}:00
                     </Text>
                   </View>
                 </View>
               ))}
-              <View style={orderDetailStyle.content__item}>
-                <View style={orderDetailStyle.item__value}>
-                  <Text style={orderDetailStyle.title}>House size</Text>
-                  <Text style={orderDetailStyle.value}>
-                    {orderDetail.houseSize} m2
-                  </Text>
-                </View>
-                <View style={orderDetailStyle.item__value}>
-                  <Text style={orderDetailStyle.title}>Total price</Text>
-                  <Text style={orderDetailStyle.value}>
-                    {orderDetail.total} ¥
-                  </Text>
-                </View>
-              </View>
             </View>
           </View>
         </View>

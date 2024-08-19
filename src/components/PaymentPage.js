@@ -23,7 +23,7 @@ import jcbIcon from "../images/jcb.png";
 import mastercardIcon from "../images/mastercard.png";
 
 export default function PaymentPage({ navigation, route }) {
-  const { currentPrice, userInfo, orderDate, roomSize, orderID, orderType } =
+  const { currentPrice, userInfo, orderDate, orderID, orderType } =
     route.params || [];
 
   const [paymentOption, setPaymentOption] = useState(0);
@@ -61,18 +61,10 @@ export default function PaymentPage({ navigation, route }) {
           paymentNumer: atmNumber,
           paymentCVV: atmCVV,
         },
-        houseSize: roomSize,
         workingTime: orderDate,
         total: currentPrice,
         createdDate: createdDate,
-        rating: {
-          ratingState: 0,
-          ratingOverall: "",
-          ratingQuality: "",
-          ratingStaff: "",
-          ratingBooking: "",
-          ratingMore: "",
-        },
+        ratingState: 0,
       });
       navigation.navigate("Completed", { orderID: orderID });
     }
@@ -105,9 +97,11 @@ export default function PaymentPage({ navigation, route }) {
         <View style={shareStyle.body}>
           <TouchableWithoutFeedback onPress={hideKeyboard}>
             <View style={paymentStyle.payment__container}>
-              <Text style={paymentStyle.payment__value}>
-                Total: {currentPrice}¥
-              </Text>
+              <View style={paymentStyle.paymnet__price}>
+                <Text style={paymentStyle.payment__price_value}>
+                  Total: {currentPrice}¥
+                </Text>
+              </View>
               <View style={paymentStyle.payment__option}>
                 <TouchableOpacity
                   style={[
@@ -186,11 +180,6 @@ export default function PaymentPage({ navigation, route }) {
                     <Text style={paymentStyle.atm__code}>
                       CVC/CVV: {atmCVV}
                     </Text>
-                    <View style={paymentStyle.atm__type}>
-                      <Image source={visaIcon} />
-                      <Image source={mastercardIcon} />
-                      <Image source={jcbIcon} />
-                    </View>
                   </View>
                 </View>
               ) : (

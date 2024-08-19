@@ -1,52 +1,59 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import React, { useState } from "react";
+import * as FileSystem from "expo-file-system";
 
 export default function Testing() {
-  const getRandomNumber = (min, max) => {
-    const random = Math.random() * (max - min) + min;
-    return parseInt(random);
+  const [input, setInput] = useState("");
+  const [storageValue, setStorageValue] = useState("");
+
+  async function saveDataToFile(fileName, data) {
+    const fileUri = FileSystem.documentDirectory + fileName;
+    try {
+      await FileSystem.writeAsStringAsync(fileUri, data);
+      console.log("Data saved successfully to", fileUri);
+    } catch (error) {
+      console.error("Error saving data", error);
+    }
+  }
+  async function readDataFromFile(fileName) {
+    const fileUri = FileSystem.documentDirectory + fileName;
+    try {
+      const data = await FileSystem.readAsStringAsync(fileUri);
+      console.log("Data read successfully:", data);
+      return setStorageValue(data);
+    } catch (error) {
+      console.error("Error reading data", error);
+      return null;
+    }
+  }
+  const handleSaveStorage = () => {
+    saveDataToFile("userInfo.txt", input);
   };
-
-  const generateOrderID = () => {
-    const date = new Date();
-    const months = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC",
-    ];
-    //for time
-    const currentHour = date.getHours();
-    const currentMinute = date.getMinutes();
-    const currentSecond = date.getSeconds();
-    const currentTime = `${currentHour}${currentMinute}${currentSecond}`;
-    //for date
-    const currentDay = date.getDate();
-    const currentMonth = months[date.getMonth()];
-    const currentYear = date.getFullYear().toString().substring(2, 4);
-    const currentDate = `${currentMonth}${currentDay}${currentYear}`;
-
-    const generatedID = `${currentTime}${currentDate}${getRandomNumber(
-      0,
-      1000
-    )}`;
-
-    return generatedID;
+  const handleReadStorage = () => {
+    readDataFromFile("userInfo.txt");
   };
-
-  console.log(generateOrderID());
-
   return (
     <SafeAreaView>
-      <Text>Testing</Text>
+      <TextInput
+        placeholder="Input here"
+        defaultValue={input}
+        onChangeText={(newText) => setInput(newText)}
+      />
+      <Text>{storageValue}</Text>
+      <TouchableOpacity onPress={handleSaveStorage}>
+        <Text>Save input value</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleReadStorage}>
+        <Text>Read input value</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

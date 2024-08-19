@@ -26,19 +26,59 @@ export default function HourPage({ navigation }) {
   const [duration, setDuration] = useState(3);
   const [startTime, setStartTime] = useState(0);
   const [paymentCount, setPaymentCount] = useState(0);
+  const [isHolidaySelected, setIsHolidaySelected] = useState(false);
+
+  const holidayArray = [
+    {
+      name: "Testing Day",
+      date: "15/08",
+    },
+    {
+      name: "Christmas Day",
+      date: "25/12",
+    },
+    {
+      name: "Lunar New Year",
+      date: "31/12",
+    },
+    {
+      name: "Lunar New Year",
+      date: "01/01",
+    },
+    {
+      name: "Lunar New Year",
+      date: "02/01",
+    },
+    {
+      name: "Lunar New Year",
+      date: "03/01",
+    },
+  ];
 
   useEffect(() => {
     const date = new Date();
     const hour = date.getHours();
 
     if (hour > 7 && hour < 19) {
-      setStartTime(hour + 1);
+      setStartTime(hour + 4);
     }
   }, []);
 
   useEffect(() => {
-    setPaymentCount(duration * 3000);
-  }, [duration]);
+    if (isHolidaySelected) {
+      setPaymentCount(duration * 3000 + duration * 3000 * 0.25);
+    } else {
+      setPaymentCount(duration * 3000);
+    }
+  }, [duration, isHolidaySelected]);
+
+  const isHoliday = (date) => {
+    const formattedDate = moment(date).format("DD/MM");
+    const holiday = holidayArray.find(
+      (holiday) => holiday.date === formattedDate
+    );
+    return holiday;
+  };
 
   const onDayPress = (day) => {
     const selectedDay = moment(day.dateString);
@@ -53,6 +93,16 @@ export default function HourPage({ navigation }) {
       Alert.alert("We are closed", "Please choose another day!");
       return;
     }
+    const holiday = isHoliday(day.dateString);
+    if (holiday) {
+      setIsHolidaySelected(true);
+      Alert.alert(
+        `Today is ${holiday.name}`,
+        "We will add 25% to the total invoice for holiday occasions."
+      );
+    } else {
+      setIsHolidaySelected(false);
+    }
 
     const formattedDate = selectedDay.format("DD/MM/YYYY");
     setSelectedDate(formattedDate);
@@ -60,7 +110,7 @@ export default function HourPage({ navigation }) {
     setMarkedDates({
       [day.dateString]: {
         selected: true,
-        selectedColor: "blue",
+        selectedColor: "#141E46",
         customStyles: {
           container: {
             backgroundColor: "#F45050",
@@ -82,7 +132,7 @@ export default function HourPage({ navigation }) {
   };
 
   const handleNavigateToHouseSize = () => {
-    navigation.navigate("HouseSize", {
+    navigation.navigate("Info", {
       orderType: 0,
       currentPrice: paymentCount,
       orderDate: [

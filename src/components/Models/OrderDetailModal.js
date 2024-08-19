@@ -25,6 +25,10 @@ export default function OrderDetailModal({
             <Text style={detailStyle.order__headline}>
               Service: Hire in Hours
             </Text>
+          ) : orderType === 1 ? (
+            <Text style={detailStyle.order__headline}>
+              Service: Hire in Days
+            </Text>
           ) : (
             <></>
           )}

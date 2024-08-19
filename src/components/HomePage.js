@@ -1,12 +1,13 @@
 import {
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import shareStyle from "../styles/shareStyle";
 import homeStyle from "../styles/homeStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -14,8 +15,31 @@ import Clock from "../images/clock.png";
 import Box from "../images/box.png";
 import Calendar from "../images/calendar.png";
 import Customer from "../images/customer-service.png";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export default function HomePage({ navigation }) {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    getReviews();
+  }, []);
+
+  const getReviews = async () => {
+    const reviewRef = collection(db, "reviewsList");
+
+    const getReviewByState = query(reviewRef, where("state", "==", 1));
+
+    const reviewSnapShot = await getDocs(getReviewByState);
+
+    const reviewValue = reviewSnapShot.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+
+    setReviews(reviewValue);
+  };
+
   return (
     <View style={shareStyle.container}>
       <View style={shareStyle.content}>
@@ -52,14 +76,14 @@ export default function HomePage({ navigation }) {
                     <Text style={homeStyle.type}>Days</Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={homeStyle.btn__container}>
+                {/* <TouchableOpacity style={homeStyle.btn__container}>
                   <Image source={Box} />
 
                   <View style={homeStyle.btn__text}>
                     <Text style={homeStyle.service}>Hire with</Text>
                     <Text style={homeStyle.type}>Combo</Text>
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
               <View style={homeStyle.group__btns}>
                 <TouchableOpacity
@@ -72,6 +96,55 @@ export default function HomePage({ navigation }) {
                   </View>
                 </TouchableOpacity>
               </View>
+            </View>
+            <View style={homeStyle.home__group}>
+              <Text style={homeStyle.group__headline}>Our Feedback</Text>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                style={homeStyle.group__review_list}
+              >
+                {reviews.map((review, index) => (
+                  <View key={index} style={homeStyle.list__item}>
+                    <View style={homeStyle.item__headline}>
+                      <Text style={homeStyle.item__name}>
+                        {review.userName}
+                      </Text>
+                      <View style={homeStyle.item__rate}>
+                        <Text style={homeStyle.item__rate_number}>
+                          {(review.rateOverall + 1).toFixed(1)}/5.0
+                        </Text>
+                        <Icon name="mood" style={homeStyle.item__rate_icon} />
+                      </View>
+                    </View>
+                    <View style={homeStyle.item__service}>
+                      <Text style={homeStyle.item__service_title}>
+                        Service:
+                      </Text>
+                      {review.orderService === 0 ? (
+                        <Text style={homeStyle.item__service_value}>
+                          Hourly
+                        </Text>
+                      ) : review.orderService === 1 ? (
+                        <Text style={homeStyle.item__service_value}>Daily</Text>
+                      ) : (
+                        <Text style={homeStyle.item__service_value}>Combo</Text>
+                      )}
+                    </View>
+                    <View style={homeStyle.item__feedback}>
+                      {review.rateFeedback === "" ? (
+                        <Text style={homeStyle.item__feedback_value}>
+                          "Great!!"
+                        </Text>
+                      ) : (
+                        <Text style={homeStyle.item__feedback_value}>
+                          "{review.rateFeedback.substring(0, 30)}..."
+                        </Text>
+                      )}
+                    </View>
+                  </View>
+                ))}
+              </ScrollView>
             </View>
           </View>
         </View>

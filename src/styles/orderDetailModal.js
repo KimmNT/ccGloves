@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: primary,
     padding: res * 0.015,
     borderRadius: res * 0.03,
+    gap: res * 0.02,
   },
   order__item: {
     backgroundColor: light,

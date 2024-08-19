@@ -16,12 +16,17 @@ const styles = StyleSheet.create({
     height: "100%",
     gap: res * 0.04,
   },
-  payment__value: {
-    fontSize: res * 0.03,
+  paymnet__price: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: btnColor,
+    padding: res * 0.02,
+    borderRadius: res * 0.03,
+  },
+  payment__price_value: {
+    fontSize: res * 0.025,
     fontWeight: "600",
-    color: dark,
-    textAlign: "center",
-    marginTop: res * 0.01,
   },
   payment__option: {
     flexDirection: "row",
@@ -69,13 +74,12 @@ const styles = StyleSheet.create({
     borderRadius: res * 0.04,
   },
   value__text: {
-    fontSize: res * 0.025,
+    fontSize: res * 0.02,
     textTransform: "uppercase",
     fontWeight: "900",
   },
   atm__container: {
     gap: res * 0.02,
-    marginTop: res * 0.02,
   },
   atm__item: {
     width: "100%",
@@ -112,13 +116,6 @@ const styles = StyleSheet.create({
     fontSize: res * 0.02,
     fontWeight: "600",
     color: light,
-  },
-  atm__type: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    gap: res * 0.02,
-    width: "100%",
   },
 });
 
