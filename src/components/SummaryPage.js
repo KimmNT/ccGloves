@@ -15,6 +15,8 @@ import summaryStyle from "../styles/SummaryStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OrderDetailModal from "./Models/OrderDetailModal";
 import InformationDetailModal from "./Models/InformationDetailModals";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export default function SummaryPage({ navigation, route }) {
   const { currentPrice, userInfo, orderDate, orderType } = route.params || [];
@@ -22,10 +24,42 @@ export default function SummaryPage({ navigation, route }) {
   const [orderId, setOrderId] = useState("");
   const [orderModalVisible, setOrderModalVisible] = useState(false);
   const [infoModalVisible, setInfoModalVisible] = useState(false);
+  const [discountList, setDiscountList] = useState([]);
+  const [discountInput, setDiscountInput] = useState("");
+  const [discountResult, setDiscountResult] = useState([]);
+  const [discountString, setDiscountString] = useState("");
+  const [discountValue, setDiscountValue] = useState(0);
 
   useEffect(() => {
     setOrderId(generateOrderID());
+    getDiscountByEmail();
   }, []);
+
+  useEffect(() => {
+    if (discountResult.length > 0) {
+      discountResult.map((discount) =>
+        setDiscountValue(discount.discountValue)
+      );
+    }
+  }, [discountResult]);
+
+  const handleDiscountInputChange = (newText) => {
+    setDiscountInput(newText.toUpperCase());
+  };
+
+  const getDiscountByEmail = async () => {
+    try {
+      const q = query(
+        collection(db, "discountList"),
+        where("orderEmail", "==", userInfo.email)
+      );
+      const querySnapshot = await getDocs(q);
+      const results = querySnapshot.docs.map((doc) => doc.data());
+      setDiscountList(results);
+    } catch (error) {
+      console.error("Error searching by email: ", error);
+    }
+  };
 
   const getRandomNumber = (min, max) => {
     const random = Math.random() * (max - min) + min;
@@ -67,22 +101,36 @@ export default function SummaryPage({ navigation, route }) {
     return generatedID;
   };
 
-  /*
-  for generate a random string without matching
-  get current time, ex: 132701
-  get currrent day, ex: AUG1024
-  generate random number from 0-1000: 500
-  combine: AUG1024132701500
-  */
-
   const handleNavigate = async () => {
     navigation.navigate("Payment", {
       orderType: orderType,
-      currentPrice: currentPrice + currentPrice * 0.1,
+      currentPrice:
+        currentPrice +
+        currentPrice * 0.1 -
+        (currentPrice * discountValue) / 100,
       userInfo: userInfo,
       orderDate: orderDate,
       orderID: orderId,
+      discountCode: discountValue > 0 ? discountInput : "",
     });
+  };
+
+  const handleCheckDiscountCode = () => {
+    const matchingDiscountValue = discountList.filter(
+      (discount) => discount.discountCode === discountInput
+    );
+    if (matchingDiscountValue.length > 0) {
+      setDiscountResult(matchingDiscountValue);
+      setDiscountString("");
+    } else {
+      setDiscountString(
+        "We cannot find this coupon. Please check it and try again."
+      );
+    }
+  };
+
+  const handleRemoveDiscount = () => {
+    setDiscountResult([]), setDiscountString(""), setDiscountValue(0);
   };
 
   return (
@@ -113,12 +161,59 @@ export default function SummaryPage({ navigation, route }) {
                 <Text style={summaryStyle.sub__payment_value}>Tax:</Text>
                 <Text style={summaryStyle.sub__payment_value}>10%</Text>
               </View>
+              {discountResult.length > 0 ? (
+                <View style={summaryStyle.payment__price_item}>
+                  <Text style={summaryStyle.sub__payment_value}>Discount:</Text>
+                  <View style={summaryStyle.sub__payment_coupon}>
+                    <Text style={summaryStyle.sub__payment_value}>
+                      -{discountValue}%
+                    </Text>
+                    <TouchableOpacity
+                      style={summaryStyle.sub__payment_coupon_remove}
+                      onPress={handleRemoveDiscount}
+                    >
+                      <Icon
+                        name="remove"
+                        style={summaryStyle.sub__payment_coupon_remove_icon}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ) : (
+                <></>
+              )}
               <View style={summaryStyle.payment__price_item}>
                 <Text style={summaryStyle.payment__value}>Total:</Text>
-                <Text style={summaryStyle.payment__value}>
-                  {currentPrice + currentPrice * 0.1}¥
-                </Text>
+                {discountResult.length > 0 ? (
+                  <Text style={summaryStyle.payment__value}>
+                    {currentPrice +
+                      currentPrice * 0.1 -
+                      (currentPrice * discountValue) / 100}
+                    ¥
+                  </Text>
+                ) : (
+                  <Text style={summaryStyle.payment__value}>
+                    {currentPrice + currentPrice * 0.1}¥
+                  </Text>
+                )}
               </View>
+            </View>
+            <View style={summaryStyle.coupon__container}>
+              <View style={summaryStyle.coupon__content}>
+                <TextInput
+                  placeholder="Enter your discount"
+                  onChangeText={handleDiscountInputChange}
+                  value={discountInput}
+                  style={summaryStyle.coupon__input}
+                />
+                <TouchableOpacity
+                  onPress={handleCheckDiscountCode}
+                  style={summaryStyle.coupon__btn}
+                >
+                  <Text style={summaryStyle.coupon__btn_text}>Apply</Text>
+                </TouchableOpacity>
+              </View>
+              <Text style={summaryStyle.coupon__error}>{discountString}</Text>
             </View>
             <View style={summaryStyle.summary__item}>
               <TouchableOpacity

@@ -12,9 +12,10 @@ const light = "#FFF";
 
 const styles = StyleSheet.create({
   home__container: {
+    marginTop: res * 0.03,
     width: "100%",
     height: "100%",
-    gap: res * 0.05,
+    gap: res * 0.1,
   },
   home__group: {
     display: "flex",
@@ -71,65 +72,56 @@ const styles = StyleSheet.create({
     fontSize: res * 0.02,
     fontWeight: "900",
   },
-  group__review_list: {
-    width: "100%",
-  },
+  group__review_list: {},
   list__item: {
-    flex: 1,
+    padding: res * 0.02,
+    marginRight: res * 0.02,
+    flexDirection: "row",
     backgroundColor: primary,
-    paddingVertical: res * 0.015,
-    paddingHorizontal: res * 0.02,
-    borderRadius: res * 0.02,
     gap: res * 0.02,
-    marginRight: res * 0.01,
+    borderRadius: res * 0.02,
   },
   item__headline: {
-    flexDirection: "row",
     gap: res * 0.02,
   },
   item__name: {
-    color: light,
-    fontSize: res * 0.03,
-    fontWeight: "600",
-  },
-  item__rate: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: res * 0.01,
-  },
-  item__rate_number: {
-    color: "#ADADAD",
     fontSize: res * 0.02,
     fontWeight: "600",
-  },
-  item__rate_icon: {
-    color: softYellow,
-    fontSize: res * 0.03,
+    color: light,
   },
   item__service: {
     flexDirection: "row",
-    alignItems: "center",
     gap: res * 0.01,
   },
   item__service_title: {
     color: light,
-    fontSize: res * 0.02,
-    fontWeight: "600",
   },
   item__service_value: {
     color: light,
-    fontSize: res * 0.02,
+  },
+  item__rate: {
+    flexDirection: "row",
+    gap: res * 0.01,
+    alignItems: "center",
+  },
+  item__rate_number: {
     fontWeight: "600",
+    color: light,
+  },
+  item__rate_icon: {
+    color: softYellow,
+    fontSize: res * 0.02,
   },
   item__feedback: {
+    width: res * 0.1,
     backgroundColor: light,
-    paddingVertical: res * 0.005,
-    paddingHorizontal: res * 0.01,
-    borderRadius: res * 0.01,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: res * 0.015,
   },
   item__feedback_value: {
-    fontSize: res * 0.02,
-    fontStyle: "italic",
+    fontWeight: "600",
+    fontSize: res * 0.015,
   },
 });
 

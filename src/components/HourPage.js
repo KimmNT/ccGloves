@@ -66,7 +66,7 @@ export default function HourPage({ navigation }) {
 
   useEffect(() => {
     if (isHolidaySelected) {
-      setPaymentCount(duration * 3000 + duration * 3000 * 0.25);
+      setPaymentCount(duration * 4000);
     } else {
       setPaymentCount(duration * 3000);
     }
@@ -140,6 +140,8 @@ export default function HourPage({ navigation }) {
           selectedDate: selectedDate,
           startTime: startTime,
           duration: duration,
+          title: "",
+          detail: "",
         },
       ],
     });
@@ -169,8 +171,8 @@ export default function HourPage({ navigation }) {
               <Image source={Clock} />
               <View style={hourStyle.headline_text}>
                 <Text style={hourStyle.item}>Hourly cleaning services</Text>
+                <Text style={hourStyle.item}>Working time: 07:00 - 22:00</Text>
                 <Text style={hourStyle.item}>3000¥/h (at least 3hrs)</Text>
-                <Text style={hourStyle.item}>Working time: 7AM - 10PM</Text>
               </View>
             </View>
             <View style={hourStyle.hour__calendar}>

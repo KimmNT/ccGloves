@@ -37,6 +37,7 @@ export default function ReviewSuccess({ navigation, route }) {
         await addDoc(collection(db, "discountList"), {
           orderEmail: orderEmail,
           discountCode: generateDiscount(),
+          discountValue: 5,
         });
       } catch (error) {
         console.error("Error adding document: ", error);
@@ -68,7 +69,11 @@ export default function ReviewSuccess({ navigation, route }) {
     const currentYear = date.getFullYear().toString().substring(2, 4);
     const currentDate = `${currentDay}${currentMonth}${currentYear}`;
 
-    const generatedCode = `${currentDate}5PER`;
+    //for time
+    const currentHour = date.getHours();
+    const currentMinute = date.getMinutes();
+
+    const generatedCode = `${currentDate}5PER${currentHour}${currentMinute}`;
 
     return generatedCode;
   };

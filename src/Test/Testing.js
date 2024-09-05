@@ -2,57 +2,127 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  View,
-  Button,
-  TouchableOpacity,
   TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import React, { useState } from "react";
-import * as FileSystem from "expo-file-system";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export default function Testing() {
-  const [input, setInput] = useState("");
-  const [storageValue, setStorageValue] = useState("");
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [detail, setDetail] = useState("");
 
-  async function saveDataToFile(fileName, data) {
-    const fileUri = FileSystem.documentDirectory + fileName;
-    try {
-      await FileSystem.writeAsStringAsync(fileUri, data);
-      console.log("Data saved successfully to", fileUri);
-    } catch (error) {
-      console.error("Error saving data", error);
+  const services = [
+    {
+      name: "Pick up",
+      type: "Transportation",
+      detail:
+        "Arrange transportation from your location to a desired destination.",
+    },
+    {
+      name: "Booking Restaurant",
+      type: "Food & Dining",
+      detail:
+        "Make a reservation at your favorite restaurant or find a new place to dine.",
+    },
+    {
+      name: "Booking Hotel",
+      type: "Accommodation",
+      detail:
+        "Reserve a hotel room for your stay, with various options available.",
+    },
+    {
+      name: "Booking Guided Tours",
+      type: "Activities",
+      detail: "Schedule a guided tour to explore attractions and landmarks.",
+    },
+    {
+      name: "Booking Spa/Wellness Appointments",
+      type: "Wellness",
+      detail: "Book a relaxing session at a spa or wellness center.",
+    },
+    {
+      name: "Booking Doctor’s Appointments",
+      type: "Health",
+      detail:
+        "Set up an appointment with a doctor for health consultations or check-ups.",
+    },
+    {
+      name: "Booking Hair/Beauty Salon Appointments",
+      type: "Wellness",
+      detail: "Arrange an appointment at a salon for hair or beauty services.",
+    },
+    {
+      name: "Booking Rental Equipment",
+      type: "Rental",
+      detail: "Reserve equipment needed for activities, events, or work.",
+    },
+    {
+      name: "Booking Private Transportation",
+      type: "Transportation",
+      detail:
+        "Secure private transportation services for personal or business use.",
+    },
+    {
+      name: "Renting Vacation Homes",
+      type: "Accommodation",
+      detail: "Find and rent vacation homes for short-term stays.",
+    },
+    {
+      name: "Booking Language Classes",
+      type: "Education",
+      detail:
+        "Enroll in language courses to learn or improve your language skills.",
+    },
+    {
+      name: "Booking Pet Sitting Services",
+      type: "Pet Care",
+      detail:
+        "Arrange for a pet sitter to take care of your pets while you're away.",
+    },
+    {
+      name: "Booking Personal Shopping Services",
+      type: "Personal Services",
+      detail: "Hire a personal shopper to assist with your shopping needs.",
+    },
+    {
+      name: "Booking DJ or Musician Services",
+      type: "Entertainment",
+      detail: "Book a DJ or musician for events or parties.",
+    },
+  ];
+
+  const handleCreate = async () => {
+    for (let service of services) {
+      await addDoc(collection(db, "servicesList"), {
+        name: service.name,
+        type: service.type,
+        detail: service.detail,
+      });
     }
-  }
-  async function readDataFromFile(fileName) {
-    const fileUri = FileSystem.documentDirectory + fileName;
-    try {
-      const data = await FileSystem.readAsStringAsync(fileUri);
-      console.log("Data read successfully:", data);
-      return setStorageValue(data);
-    } catch (error) {
-      console.error("Error reading data", error);
-      return null;
-    }
-  }
-  const handleSaveStorage = () => {
-    saveDataToFile("userInfo.txt", input);
-  };
-  const handleReadStorage = () => {
-    readDataFromFile("userInfo.txt");
   };
   return (
     <SafeAreaView>
       <TextInput
-        placeholder="Input here"
-        defaultValue={input}
-        onChangeText={(newText) => setInput(newText)}
+        placeholder="name"
+        value={name}
+        onChangeText={(newText) => setName(newText)}
       />
-      <Text>{storageValue}</Text>
-      <TouchableOpacity onPress={handleSaveStorage}>
-        <Text>Save input value</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleReadStorage}>
-        <Text>Read input value</Text>
+      <TextInput
+        placeholder="type"
+        value={type}
+        onChangeText={(newText) => setType(newText)}
+      />
+      <TextInput
+        placeholder="detail"
+        value={detail}
+        onChangeText={(newText) => setDetail(newText)}
+      />
+      <TouchableOpacity onPress={handleCreate}>
+        <Text>Create service</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

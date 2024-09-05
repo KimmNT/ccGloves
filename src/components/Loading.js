@@ -6,13 +6,18 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import React, { useEffect, useState } from "react";
 import shareStyle from "../styles/shareStyle";
 import loadingStyle from "../styles/loadingStyle";
-
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase";
 import LoadingElip from "../images/loadingElip.png";
+
 export default function Loading({ navigation }) {
+  const handleNavigate = () => {
+    navigation.navigate("Home");
+  };
+
   return (
     <View style={shareStyle.container}>
       <View style={loadingStyle.loading__header}>
@@ -24,7 +29,7 @@ export default function Loading({ navigation }) {
         </View>
         <TouchableOpacity
           style={loadingStyle.loading__buttonParent}
-          onPress={() => navigation.navigate("Home")}
+          onPress={handleNavigate}
         >
           <View style={loadingStyle.loading__buttonChild}>
             <Text style={loadingStyle.loading__textButton}>ccGloves</Text>

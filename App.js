@@ -16,6 +16,9 @@ import PaymentPage from "./src/components/PaymentPage";
 import CompletedPage from "./src/components/CompletedPage";
 import ReviewPage from "./src/components/ReviewPage";
 import ReviewSuccess from "./src/components/ReviewSuccess";
+import CustomeServices from "./src/components/CustomeServices";
+import CustomeCreate from "./src/components/CustomeCreate";
+import CustomCreateInfo from "./src/components/CustomCreateInfo";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +32,12 @@ export default function App() {
         <Stack.Screen name="Detail" component={DetailPage} />
         <Stack.Screen name="HourOrder" component={HourPage} />
         <Stack.Screen name="DayOrder" component={DayPage} />
+        <Stack.Screen name="CustomOrder" component={CustomeServices} />
+        <Stack.Screen name="CustomOrderCreate" component={CustomeCreate} />
+        <Stack.Screen
+          name="CustomOrderCreateInfo"
+          component={CustomCreateInfo}
+        />
         <Stack.Screen name="OrderDetail" component={OrderDetail} />
         <Stack.Screen name="HouseSize" component={HouseSize} />
         <Stack.Screen name="Info" component={InfoPage} />

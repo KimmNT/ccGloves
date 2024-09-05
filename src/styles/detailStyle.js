@@ -84,6 +84,9 @@ const styles = StyleSheet.create({
     fontSize: res * 0.03,
     color: light,
   },
+  order__list: {
+    // height: 400,
+  },
   orderBox: {
     width: "100%",
     flexDirection: "column",
@@ -93,6 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
     backgroundColor: primary,
+    marginBottom: res * 0.02,
   },
   orderBox__row: {
     width: "100%",

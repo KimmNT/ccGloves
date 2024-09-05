@@ -23,7 +23,7 @@ export default function DayPage({ navigation }) {
   const [selectedDates, setSelectedDates] = useState([]);
   const [isHolidaySelected, setIsHolidaySelected] = useState(false);
   const [paymentCount, setPaymentCount] = useState(0);
-  const [duration, setDuration] = useState(8);
+  const [duration, setDuration] = useState(7);
   const [startTime, setStartTime] = useState(7);
   const [modalVisible, setModalVisible] = useState(false);
   const [starTimeModalVisible, setStartTimeModalVisible] = useState(false);
@@ -32,7 +32,7 @@ export default function DayPage({ navigation }) {
   const [holidayValue, setHolidayValue] = useState("");
 
   const holidayArray = [
-    { name: "Testing Day", date: "20/08" },
+    { name: "Testing Day", date: "28/08" },
     { name: "Christmas Day", date: "25/12" },
     { name: "Lunar New Year", date: "31/12" },
     { name: "Lunar New Year", date: "01/01" },
@@ -58,22 +58,21 @@ export default function DayPage({ navigation }) {
     );
 
     // Adjust total duration if a holiday is detected
-    const adjustedDuration = holidayDetected
-      ? totalDuration * 1.25
-      : totalDuration;
+    holidayDetected
+      ? setPaymentCount(totalDuration * 3000 + 7000)
+      : setPaymentCount(totalDuration * 3000);
 
     // Set the total duration
-    setTotalDuration(adjustedDuration);
+    // setTotalDuration(adjustedDuration);
   }, [selectedDates]);
 
   useEffect(() => {
     if (isHolidaySelected) {
       Alert.alert(
         `Today is ${holidayValue}`,
-        "We will add 25% to the total invoice for holiday occasions."
+        "An additional 7000¥ will be charged for each holiday you select."
       );
     }
-    setPaymentCount(totalDuration * 2500);
   }, [totalDuration, isHolidaySelected]);
 
   const isHoliday = (date) => {
@@ -130,6 +129,8 @@ export default function DayPage({ navigation }) {
             selectedDate: formattedDate,
             startTime: startTime, // You can customize this value
             duration: duration, // You can customize this value
+            title: "",
+            detail: "",
           };
           const updatedDates = [...prevSelectedDates, newEntry].sort(
             (a, b) =>
@@ -247,7 +248,7 @@ export default function DayPage({ navigation }) {
                 <Text style={hourStyle.item}>Daily cleaning services</Text>
                 <Text style={hourStyle.item}>Working hours: 07:00 - 20:00</Text>
                 <Text style={hourStyle.item}>
-                  20.000¥/h (8hrs, 1hr break included)
+                  20.000¥/day (8hrs, 1hr break included)
                 </Text>
               </View>
             </View>
@@ -286,7 +287,7 @@ export default function DayPage({ navigation }) {
                         >
                           <Text style={dayStyle.item__title}>Duration:</Text>
                           <Text style={dayStyle.item__value}>
-                            {item.duration} hrs
+                            {item.duration + 1} hrs
                           </Text>
                         </TouchableOpacity>
                         <TouchableOpacity

@@ -29,7 +29,7 @@ export default function StartTimeModal({
     if (currentDate === selectedDate) {
       const currentHour = getCurrentHour();
       const times = [];
-      for (let i = currentHour + 1; i <= 22; i++) {
+      for (let i = currentHour + 4; i <= 22; i++) {
         times.push({ time: i });
       }
       return times;

@@ -1,53 +1,47 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-const res = Dimensions.get("window").width;
+const res = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   loading__header: {
-    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "70%",
+    gap: res * 0.1,
+  },
+  loading__headerText: {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-
-    top: res * 0.4,
-    gap: res * 0.3,
-  },
-  loading__headerText: {
-    // position: "absolute",
-    width: "100%",
-    height: res * 0.25,
-    justifyContent: "space-between",
-    alignItems: "center",
   },
   loading__textUpper: {
-    // position: "absolute",
-    fontSize: 40,
+    fontSize: res * 0.04,
     color: "black",
     fontWeight: "700",
     justifyContent: "center",
     alignItems: "center",
   },
   loading__textLower: {
-    // position: "absolute",
-    fontSize: 40,
+    fontSize: res * 0.04,
     color: "black",
     fontWeight: "700",
     justifyContent: "space-around",
     alignItems: "center",
   },
   loading__buttonParent: {
-    width: 210,
-    height: 80,
-    borderRadius: 40,
+    width: res * 0.25,
+    height: res * 0.095,
+    borderRadius: res * 0.05,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#BA5EBB",
   },
   loading__buttonChild: {
-    width: 200,
-    height: 70,
-    borderRadius: 35,
+    width: res * 0.23,
+    height: res * 0.08,
+    borderRadius: res * 0.05,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -57,23 +51,21 @@ const styles = StyleSheet.create({
     borderWidth: 3,
   },
   loading__textButton: {
-    fontSize: 30,
+    fontSize: res * 0.04,
     color: "papayawhip",
     fontWeight: "700",
     justifyContent: "center",
     alignItems: "center",
   },
-
   loading__containerImage: {
     position: "absolute",
     justifyContent: "flex-end",
     alignItems: "center",
     bottom: 0,
+    width: "100%",
   },
   loading__imageElip: {
-    width: res * 1,
-    height: res * 0.7,
-    resizeMode: "stretch",
+    width: "100%",
   },
 });
 

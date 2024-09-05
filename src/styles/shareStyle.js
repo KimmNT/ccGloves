@@ -1,5 +1,5 @@
 // styles.js
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
 
 const res = Dimensions.get("window").height;
 
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: bgColor,
   },
   content: {
-    marginTop: res * 0.06,
+    marginTop: Platform.OS === "ios" ? res * 0.06 : 0,
     width: "100%",
     height: "100%",
     display: "flex",
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: res * 0.05,
     position: "absolute",
     top: 0,
-    display: "flex",
     flexDirection: "row",
     paddingHorizontal: res * 0.03,
     paddingVertical: res * 0.03,
