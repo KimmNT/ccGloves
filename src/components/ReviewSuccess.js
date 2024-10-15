@@ -32,12 +32,16 @@ export default function ReviewSuccess({ navigation, route }) {
   const { orderEmail } = route.params || [];
 
   useEffect(() => {
+    const now = new Date();
+    const date = now.toLocaleDateString(); // e.g., '8/5/2024'
+
     const addDiscount = async () => {
       try {
         await addDoc(collection(db, "discountList"), {
-          orderEmail: orderEmail,
           discountCode: generateDiscount(),
           discountValue: 5,
+          discountCreatedDate: date,
+          discountBelong: orderEmail,
         });
       } catch (error) {
         console.error("Error adding document: ", error);

@@ -66,11 +66,13 @@ export default function PaymentPage({ navigation, route }) {
       await addDoc(collection(db, "orderList"), {
         id: orderID,
         type: orderType,
-        userFirstName: userInfo.firstName,
-        userLastName: userInfo.lastName,
-        userEmail: userInfo.email,
-        userPhone: userInfo.phone,
-        userAddress: `${userInfo.addDetail}, ${userInfo.district}, ${userInfo.city}, ${userInfo.prefecture}`,
+        user: {
+          userFirstName: userInfo.firstName,
+          userLastName: userInfo.lastName,
+          userEmail: userInfo.email,
+          userPhone: userInfo.phone,
+          userAddress: `${userInfo.addDetail}, ${userInfo.district}, ${userInfo.city}, ${userInfo.prefecture}`,
+        },
         status: 0,
         payment: {
           // paymentState: 0,
@@ -137,7 +139,7 @@ export default function PaymentPage({ navigation, route }) {
               <Icon name="arrow-back" style={shareStyle.icon} />
             </View>
           </TouchableOpacity>
-          <Text style={shareStyle.navbar__title}>Payment</Text>
+          <Text style={shareStyle.navbar__title}>Check Out</Text>
         </View>
         <View style={shareStyle.body}>
           <TouchableWithoutFeedback onPress={hideKeyboard}>
@@ -236,7 +238,7 @@ export default function PaymentPage({ navigation, route }) {
               >
                 <View style={paymentStyle.payment__confirm_content}>
                   <Text style={paymentStyle.value__text}>
-                    confirm your order
+                    finish your order
                   </Text>
                 </View>
               </TouchableOpacity>

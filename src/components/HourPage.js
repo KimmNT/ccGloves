@@ -59,7 +59,7 @@ export default function HourPage({ navigation }) {
     const date = new Date();
     const hour = date.getHours();
 
-    if (hour > 7 && hour < 19) {
+    if (hour > 7 && hour < 16) {
       setStartTime(hour + 4);
     }
   }, []);
